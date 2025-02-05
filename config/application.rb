@@ -40,5 +40,10 @@ module GovukGraphql
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.sequel.after_connect = proc do
+      Sequel.extension :pg_array_ops
+      Sequel::Model.db.extension :pg_json, :pg_array
+    end
   end
 end
