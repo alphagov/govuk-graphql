@@ -4,6 +4,10 @@ gem "rails", "~> 8.0.1"
 
 gem "graphql", "~> 2.4"
 
+gem "sequel", "~> 5.89"
+gem "pg", "~> 1.5"
+gem "sequel_pg", "~> 1.17"
+
 gem "puma", ">= 5.0"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
