@@ -7,6 +7,7 @@ gem "graphql", "~> 2.4"
 gem "sequel", "~> 5.89"
 gem "pg", "~> 1.5"
 gem "sequel_pg", "~> 1.17"
+gem "sequel-rails", "~> 1.2"
 
 gem "puma", ">= 5.0"
 
