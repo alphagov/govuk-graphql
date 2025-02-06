@@ -1,9 +1,19 @@
 module PathTreeHelpers
+  def self.build_paths(lookahead)
+    paths = extract_paths(lookahead)
+    reverse, forward = paths.reject(&:empty?).partition { it.last[:reverse] }
+    [
+      forward.map { |path| { path: path.map { it[:type] } } },
+      reverse.map { |path| { path: path.map { it[:type] } } },
+    ]
+  end
+
   def self.extract_paths(lookahead, current_path = [])
-    [ current_path ] + lookahead.selections
-                                .filter { it.name == :links }
-                                .flat_map(&:selections)
-                                .flat_map { extract_paths(it, current_path + [ it.name ]) }
+    [ current_path ].compact + lookahead.selections
+                                        .filter { it.name == :links }
+                                        .flat_map(&:selections)
+                                        .filter { it.name == :links_of_type }
+                                        .flat_map { extract_paths(it, current_path + [ it.arguments ]) }
   end
 
   def self.nest_results(rows)

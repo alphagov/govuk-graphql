@@ -1,43 +1,4 @@
 # frozen_string_literal: true
-
-# TODO - delete this:
-module MinistersIndex
-  LINK_TYPE_PATHS = [
-    { path: ['ordered_cabinet_ministers'] },
-    { path: ['ordered_also_attends_cabinet'] },
-    { path: ['ordered_assistant_whips'] },
-    { path: ['ordered_baronesses_and_lords_in_waiting_whips'] },
-    { path: ['ordered_house_lords_whips'] },
-    { path: ['ordered_house_of_commons_whips'] },
-    { path: ['ordered_junior_lords_of_the_treasury_whips'] },
-    { path: ['ordered_ministerial_departments'] },
-    { path: ['ordered_ministerial_departments', 'ordered_ministers'] },
-    # TODO - this is nuts - we're getting every role in every department, just so we can check
-    # if a minister's role exists within a particular department
-    # { path: ['ordered_ministerial_departments', 'ordered_roles'] },
-    # Note: person is a reverse link, content-store calls in role_appointments
-    { path: ['ordered_cabinet_ministers', 'person', 'role'] },
-    { path: ['ordered_also_attends_cabinet', 'person', 'role'] },
-    { path: ['ordered_assistant_whips', 'person', 'role'] },
-    { path: ['ordered_baronesses_and_lords_in_waiting_whips', 'person', 'role'] },
-    { path: ['ordered_house_lords_whips', 'person', 'role'] },
-    { path: ['ordered_house_of_commons_whips', 'person', 'role'] },
-    { path: ['ordered_junior_lords_of_the_treasury_whips', 'person', 'role'] },
-    { path: ['ordered_ministerial_departments', 'ordered_ministers', 'person', 'role'] }
-  ]
-
-  REVERSE_LINK_TYPE_PATHS = [
-    { path: ['ordered_cabinet_ministers', 'person'] },
-    { path: ['ordered_also_attends_cabinet', 'person'] },
-    { path: ['ordered_assistant_whips', 'person'] },
-    { path: ['ordered_baronesses_and_lords_in_waiting_whips', 'person'] },
-    { path: ['ordered_house_lords_whips', 'person'] },
-    { path: ['ordered_house_of_commons_whips', 'person'] },
-    { path: ['ordered_junior_lords_of_the_treasury_whips', 'person'] },
-    { path: ['ordered_ministerial_departments', 'ordered_ministers', 'person'] }
-  ]
-end
-
 module Resolvers
   class ExpandedEditionResolver < BaseResolver
     type Types::EditionType, null: true
@@ -52,13 +13,12 @@ module Resolvers
     end
 
     def resolve(base_path:, lookahead:)
-      # TODO - get the paths from the lookahead object instead of hardcoding them
-      # PathTreeHelpers.extract_paths(lookahead)
+      forward_paths, reverse_paths = PathTreeHelpers.build_paths(lookahead)
 
       rows = @query.call(
         :select,
-        link_type_paths: Sequel.pg_json_wrap(MinistersIndex::LINK_TYPE_PATHS),
-        reverse_link_type_paths: Sequel.pg_json_wrap(MinistersIndex::REVERSE_LINK_TYPE_PATHS),
+        link_type_paths: Sequel.pg_json_wrap(forward_paths),
+        reverse_link_type_paths: Sequel.pg_json_wrap(reverse_paths),
         base_path:
       )
 
@@ -68,6 +28,10 @@ module Resolvers
   private
 
     def prepare_query(db)
+      # TODO - handle draft and unpublished/withdrawn editions
+      # TODO - handle non-english locales
+      # TODO - investigate making this a prepared statement to cut down on planning time
+
       paths_from_json_sql = "SELECT trim_array(path, 1) as path, path[array_upper(path, 1)] as next FROM json_to_recordset(?) AS paths(path text[])"
 
       link_type_ds = db[paths_from_json_sql, :$link_type_paths]
@@ -130,8 +94,6 @@ module Resolvers
         .with(:link_type_paths, link_type_ds)
         .with(:reverse_link_type_paths, reverse_link_type_ds)
         .with_recursive(:edition_links, root_edition, recursive_term)
-      # TODO - make this a prepared statement again?
-      #.prepare(:select, :select_edition_links)
     end
   end
 end
