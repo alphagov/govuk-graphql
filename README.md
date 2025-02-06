@@ -159,6 +159,115 @@ query homepage {
 }
 ```
 
+## Performance
+
+The homepage query above completes in about ~35-60ms on my local machine, of which ~13-20ms is spent in the database:
+
+```
+# Homepage load times
+
+Sequel::Postgres::Database (12.7ms)
+Completed 200 OK in 35ms (Views: 0.6ms | GC: 0.0ms)
+
+Sequel::Postgres::Database (18.9ms)
+Completed 200 OK in 54ms (Views: 0.7ms | GC: 0.0ms)
+
+Sequel::Postgres::Database (12.1ms)
+Completed 200 OK in 34ms (Views: 0.7ms | GC: 0.0ms)
+```
+
+More complicated pages such as the ministers index page take longer to load, but still complete in well under a second:
+
+<details>
+<summary>Ministers Index GraphQL Query</summary>
+
+```graphql
+fragment Person on Edition {
+    title
+    base_path
+    details
+    links {
+        role_appointments: links_of_type(type: "person", reverse: true) {
+            links {
+                role: links_of_type(type: "role") {
+                    title
+                    base_path
+                }
+            }
+        }
+    }
+}
+
+fragment Department on Edition {
+    base_path
+    links {
+        ordered_ministers: links_of_type(type: "ordered_ministers") {
+            base_path
+        }
+        ordered_roles: links_of_type(type: "ordered_roles") {
+            content_id
+        }
+    }
+}
+
+query ministers_index {
+    edition(base_path: "/government/ministers") {
+        title
+        links {
+            ordered_cabinet_ministers: links_of_type(type: "ordered_cabinet_ministers") {
+                ...Person
+            }
+            ordered_also_attends_cabinet: links_of_type(
+                type: "ordered_also_attends_cabinet"
+            ) {
+                ...Person
+            }
+            ordered_ministerial_departments: links_of_type(
+                type: "ordered_ministerial_departments"
+            ) {
+                ...Department
+            }
+            ordered_assistant_whips: links_of_type(type: "ordered_assistant_whips") {
+                ...Person
+            }
+            ordered_baronesses_and_lords_in_waiting_whips: links_of_type(
+                type: "ordered_baronesses_and_lords_in_waiting_whips"
+            ) {
+                ...Person
+            }
+            ordered_house_lords_whips: links_of_type(type: "ordered_house_lords_whips") {
+                ...Person
+            }
+            ordered_house_of_commons_whips: links_of_type(
+                type: "ordered_house_of_commons_whips"
+            ) {
+                ...Person
+            }
+            ordered_junior_lords_of_the_treasury_whips: links_of_type(
+                type: "ordered_junior_lords_of_the_treasury_whips"
+            ) {
+                ...Person
+            }
+        }
+    }
+}
+```
+
+</details>
+
+```
+# Ministers index load times
+
+Sequel::Postgres::Database (120.2ms)
+Completed 200 OK in 380ms (Views: 4.6ms | GC: 28.1ms)
+
+Sequel::Postgres::Database (107.5ms)
+Completed 200 OK in 331ms (Views: 3.7ms | GC: 5.4ms)
+
+Sequel::Postgres::Database (101.1ms)
+Completed 200 OK in 379ms (Views: 4.2ms | GC: 37.0ms)
+```
+
 ## Where to look at the code?
 
 The big scary SQL query is in `app/graphql/resolvers/expanded_edition_resolver.rb`.
