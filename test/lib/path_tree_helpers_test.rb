@@ -34,30 +34,33 @@ class PathTreeHelpersTest < Minitest::Test
 
   def test_nest_results
     rows = [
-      { path: [], content_id: "root" },
-      { path: %w[links], content_id: "link1" },
-      { path: %w[links person], content_id: "person1" },
-      { path: %w[links role], content_id: "role1" }
+      { id_path: [1], path: [], content_id: "root" },
+      { id_path: [1, 2], path: %w[link_type], content_id: "link1" },
+      { id_path: [1, 2, 3], path: %w[link_type person], content_id: "person1" },
+      { id_path: [1, 2, 4], path: %w[link_type person], content_id: "person2" },
+      { id_path: [1, 2, 5], path: %w[link_type role], content_id: "role1" }
     ]
 
     expected_tree = {
-      node: { path: [], content_id: "root" },
-      children: {
-        "links" => [{
-          node: { path: %w[links], content_id: "link1" },
-          children: {
-            "person" => [{
-              node: { path: %w[links person], content_id: "person1" },
-              children: {}
-            }],
-            "role" => [{
-              node: { path: %w[links role], content_id: "role1" },
-              children: {}
-            }]
+      id_path: [1], path: [], content_id: "root",
+      links: {
+        "link_type" => [
+          {
+            id_path: [1, 2], path: ["link_type"], content_id: "link1",
+            links: {
+              "person" => [
+                { id_path: [1, 2, 3], path: ["link_type", "person"], content_id: "person1" },
+                { id_path: [1, 2, 4], path: ["link_type", "person"], content_id: "person2" }
+              ],
+              "role" => [
+                { id_path: [1, 2, 5], path: ["link_type", "role"], content_id: "role1" }
+              ]
+            }
           }
-        }]
+        ]
       }
     }
+
 
     assert_equal expected_tree, PathTreeHelpers.nest_results(rows)
   end

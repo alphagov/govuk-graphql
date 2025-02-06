@@ -4,11 +4,11 @@ module Types
     field :links, LinksType
 
     def title
-      object[:node][:title]
+      object[:title]
     end
 
     def links
-      object[:children]
+      object[:links]
     end
   end
 end

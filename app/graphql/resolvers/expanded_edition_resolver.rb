@@ -48,14 +48,15 @@ module Resolvers
 
     def initialize(*args, **kwargs, &block)
       super
-      @prepared_statement = prepare_statement(Sequel::Model.db)
+      @query = prepare_query(Sequel::Model.db)
     end
 
     def resolve(base_path:, lookahead:)
-      p PathTreeHelpers.extract_paths(lookahead)
-
       # TODO - get the paths from the lookahead object instead of hardcoding them
-      rows = @prepared_statement.call(
+      # PathTreeHelpers.extract_paths(lookahead)
+
+      rows = @query.call(
+        :select,
         link_type_paths: Sequel.pg_json_wrap(MinistersIndex::LINK_TYPE_PATHS),
         reverse_link_type_paths: Sequel.pg_json_wrap(MinistersIndex::REVERSE_LINK_TYPE_PATHS),
         base_path:
@@ -66,16 +67,17 @@ module Resolvers
 
   private
 
-    def prepare_statement(db)
+    def prepare_query(db)
       paths_from_json_sql = "SELECT trim_array(path, 1) as path, path[array_upper(path, 1)] as next FROM json_to_recordset(?) AS paths(path text[])"
 
       link_type_ds = db[paths_from_json_sql, :$link_type_paths]
       reverse_link_type_ds = db[paths_from_json_sql, :$reverse_link_type_paths]
 
-      def columns(type, path = nil)
+      def columns(type, path = nil, id_path = nil)
         [
           Sequel[type].as(:type),
           (path || Sequel[:edition_links][:path].pg_array.push(:link_type)).as(:path),
+          (id_path || Sequel[:edition_links][:id_path].pg_array.push(Sequel[:editions][:id])).as(:id_path),
           Sequel[:documents][:content_id].as(:content_id),
           Sequel[:editions][:id].as(:edition_id),
           Sequel[:editions].*
@@ -85,7 +87,7 @@ module Resolvers
       root_edition = db[:editions]
                        .join(:documents, id: :document_id)
                        .where(state: "published", locale: "en", base_path: :$base_path)
-                       .select(*columns("root", Sequel.pg_array([], "text")))
+                       .select(*columns("root", Sequel.pg_array([], "text"), Sequel.pg_array([Sequel[:editions][:id]], "int")))
 
       edition_links_and_paths = db[:edition_links].join(:link_type_paths, path: :path)
       forward_editions = edition_links_and_paths
@@ -101,18 +103,20 @@ module Resolvers
                             .join(:editions, document_id: :id, state: "published")
                             .select(*columns("forward link set"))
 
-      reverse_editions = db[:edition_links].join(:reverse_link_type_paths, path: :path)
-                                            .join(:links, target_content_id: Sequel[:edition_links][:content_id], link_type: Sequel[:reverse_link_type_paths][:next])
-                                            .join(:editions, id: :edition_id, state: "published")
-                                            .join(:documents, id: :document_id, locale: "en")
-                                            .select(*columns("reverse edition"))
+      reverse_editions = db[:edition_links]
+                           .join(:reverse_link_type_paths, path: :path)
+                           .join(:links, target_content_id: Sequel[:edition_links][:content_id], link_type: Sequel[:reverse_link_type_paths][:next])
+                           .join(:editions, id: :edition_id, state: "published")
+                           .join(:documents, id: :document_id, locale: "en")
+                           .select(*columns("reverse edition"))
 
-      reverse_link_sets = db[:edition_links].join(:reverse_link_type_paths, path: :path)
-                                             .join(:links, target_content_id: Sequel[:edition_links][:content_id], link_type: Sequel[:reverse_link_type_paths][:next])
-                                             .join(:link_sets, id: :link_set_id)
-                                             .join(:documents, content_id: :content_id, locale: "en")
-                                             .join(:editions, document_id: :id, state: "published")
-                                             .select(*columns("reverse link set"))
+      reverse_link_sets = db[:edition_links]
+                            .join(:reverse_link_type_paths, path: :path)
+                            .join(:links, target_content_id: Sequel[:edition_links][:content_id], link_type: Sequel[:reverse_link_type_paths][:next])
+                            .join(:link_sets, id: :link_set_id)
+                            .join(:documents, content_id: :content_id, locale: "en")
+                            .join(:editions, document_id: :id, state: "published")
+                            .select(*columns("reverse link set"))
 
       recursive_term =
         forward_editions
@@ -126,7 +130,8 @@ module Resolvers
         .with(:link_type_paths, link_type_ds)
         .with(:reverse_link_type_paths, reverse_link_type_ds)
         .with_recursive(:edition_links, root_edition, recursive_term)
-        .prepare(:select, :select_edition_links)
+      # TODO - make this a prepared statement again?
+      #.prepare(:select, :select_edition_links)
     end
   end
 end
