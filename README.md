@@ -24,6 +24,7 @@ this implementation:
 - walks the graphql request using lookahead
 - works out which link type paths are needed to resolve the request
 - uses a single SQL query to fetch all the editions needed to resolve the request
+- reconstructs the tree of editions requested in the graphql query from the database results
 
 The resulting SQL query is complex, but initial testing suggests that its performance is very good.
 
