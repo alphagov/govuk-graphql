@@ -8,6 +8,7 @@ gem "sequel", "~> 5.89"
 gem "pg", "~> 1.5"
 gem "sequel_pg", "~> 1.17", require: "sequel"
 gem "sequel-rails", "~> 1.2"
+gem "memo_wise", "~> 1.10"
 
 gem "puma", ">= 5.0"
 
@@ -29,4 +30,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "rack-mini-profiler", "~> 3.3"
+  gem "stackprof", "~> 0.2.27"
+
+  # Needed by RubyMine
+  gem "mutex_m", require: false
 end
