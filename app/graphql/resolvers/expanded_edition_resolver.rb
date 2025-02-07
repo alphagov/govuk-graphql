@@ -14,13 +14,25 @@ module Resolvers
 
     def resolve(base_path:, lookahead:)
       forward_paths, reverse_paths = PathTreeHelpers.build_paths(lookahead)
+      columns = PathTreeHelpers.find_columns(lookahead).to_a
 
-      rows = @query.call(
-        :select,
-        link_type_paths: Sequel.pg_json_wrap(forward_paths),
-        reverse_link_type_paths: Sequel.pg_json_wrap(reverse_paths),
-        base_path:
-      )
+      rows = @query
+               .select(
+                 :type,
+                 :path,
+                 :id_path,
+                 :content_id,
+                 :locale,
+                 :edition_id,
+                 *columns,
+                 Sequel.case({ { should_include_details: true } => :details }, nil).as(:details),
+               )
+               .call(
+                 :select,
+                 link_type_paths: Sequel.pg_json_wrap(forward_paths),
+                 reverse_link_type_paths: Sequel.pg_json_wrap(reverse_paths),
+                 base_path:
+               )
 
       PathTreeHelpers.nest_results(rows)
     end
@@ -32,18 +44,23 @@ module Resolvers
       # TODO - handle non-english locales
       # TODO - investigate making this a prepared statement to cut down on planning time
 
-      paths_from_json_sql = "SELECT trim_array(path, 1) as path, path[array_upper(path, 1)] as next FROM json_to_recordset(?) AS paths(path text[])"
+      paths_from_json_sql = <<~SQL
+        SELECT path, next, include_details
+        FROM json_to_recordset(?) AS paths(path text[], next text, include_details boolean)
+      SQL
 
       link_type_ds = db[paths_from_json_sql, :$link_type_paths]
       reverse_link_type_ds = db[paths_from_json_sql, :$reverse_link_type_paths]
 
-      def columns(type, path = nil, id_path = nil)
+      def columns(type, root: false)
         [
           Sequel[type].as(:type),
-          (path || Sequel[:edition_links][:path].pg_array.push(:link_type)).as(:path),
-          (id_path || Sequel[:edition_links][:id_path].pg_array.push(Sequel[:editions][:id])).as(:id_path),
+          (root ? Sequel.pg_array([], "text") : Sequel[:edition_links][:path].pg_array.push(:link_type)).as(:path),
+          (root ? Sequel.pg_array([ Sequel[:editions][:id] ], "int") : Sequel[:edition_links][:id_path].pg_array.push(Sequel[:editions][:id])).as(:id_path),
           Sequel[:documents][:content_id].as(:content_id),
+          Sequel[:documents][:locale].as(:locale),
           Sequel[:editions][:id].as(:edition_id),
+          Sequel[(root ? true : :include_details)].as(:should_include_details),
           Sequel[:editions].*
         ]
       end
@@ -51,7 +68,7 @@ module Resolvers
       root_edition = db[:editions]
                        .join(:documents, id: :document_id)
                        .where(state: "published", locale: "en", base_path: :$base_path)
-                       .select(*columns("root", Sequel.pg_array([], "text"), Sequel.pg_array([Sequel[:editions][:id]], "int")))
+                       .select(*columns("root", root: true))
 
       edition_links_and_paths = db[:edition_links].join(:link_type_paths, path: :path)
       forward_editions = edition_links_and_paths
