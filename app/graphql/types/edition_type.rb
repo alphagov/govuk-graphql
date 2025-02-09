@@ -32,5 +32,6 @@ module Types
     field :content_id, String, null: false
 
     field :links, LinksType
+    field :locale, String, null: false
   end
 end
