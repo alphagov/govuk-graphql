@@ -8,6 +8,7 @@ class ExpandedEditionDataset
     db = Sequel::Model.db
 
     # TODO - handle draft and unpublished/withdrawn editions
+    # example of a withdrawn edition with a withdrawn parent: https://www.gov.uk/government/publications/revenue-and-customs-brief-10-2013-withdrawal-of-the-vat-exemption-for-supplies-of-research/revenue-and-customs-brief-10-2013-withdrawal-of-the-vat-exemption-for-supplies-of-research
     # TODO - handle non-english locales
 
     paths_from_json_sql = <<~SQL
