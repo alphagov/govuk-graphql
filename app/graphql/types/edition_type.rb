@@ -25,7 +25,7 @@ module Types
     field :published_at, String, null: true
     field :publishing_api_first_published_at, String, null: true
     field :publishing_api_last_edited_at, String, null: true
-    field :details, GraphQL::Types::JSON, null: false
+    field :details, Types::DetailsType, null: false
     field :routes, GraphQL::Types::JSON, null: true
     field :redirects, GraphQL::Types::JSON, null: true
     field :last_edited_by_editor_id, String, null: true

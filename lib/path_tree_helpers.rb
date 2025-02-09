@@ -30,7 +30,7 @@ module PathTreeHelpers
     update_type
     updated_at
     user_facing_version
-  ])
+  ]).freeze
 
   def self.build_paths(lookahead)
     paths = extract_paths(lookahead)
