@@ -45,7 +45,8 @@ module PathTreeHelpers
     {
       path: raw_path[0...-1].map { it[:type] },
       next: raw_path.last[:type],
-      include_details: raw_path.last[:include_details]
+      columns: raw_path.last[:columns],
+      details_fields: raw_path.last[:details_fields],
     }
   end
 
@@ -60,16 +61,11 @@ module PathTreeHelpers
   def self.build_segment(selection)
     segment = {}
     segment = segment.merge(selection.arguments)
-    segment = segment.merge({ include_details: selection.selections.any? { it.name == :details } })
+    segment = segment.merge({
+                              columns: (selection.selections.map(&:name).to_set & ALL_EDITION_COLUMNS).index_with(true),
+                              details_fields: selection.selections.find { it.name == :details }&.selections&.map(&:name) || []
+                            })
     segment
-  end
-
-  def self.find_columns(lookahead, columns = Set[])
-    if %i[edition links_of_type].include?(lookahead.name)
-      columns |= (lookahead.selections.map(&:name).to_set & ALL_EDITION_COLUMNS - Set[:details])
-    end
-
-    columns | lookahead.selections.map { find_columns(it, columns) }.to_set.flatten
   end
 
   def self.nest_results(rows)
