@@ -12,7 +12,7 @@ class ExpandedEditionDataset
     # TODO - handle non-english locales
 
     paths_from_json_sql = <<~SQL
-      SELECT path, next, columns, details_fields
+      SELECT path, next, columns
       FROM json_to_recordset(?) AS paths(path text[], next text, columns jsonb)
     SQL
 
@@ -87,5 +87,5 @@ class ExpandedEditionDataset
       .with_recursive(:edition_links, root_edition, recursive_term)
       .prepare(:select, :expanded_editions)
   end
-  memo_wise :select
+  memo_wise :get_or_prepare_statement
 end
