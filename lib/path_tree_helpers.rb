@@ -46,7 +46,6 @@ module PathTreeHelpers
       path: raw_path[0...-1].map { it[:type] },
       next: raw_path.last[:type],
       columns: raw_path.last[:columns],
-      details_fields: raw_path.last[:details_fields],
     }
   end
 
@@ -61,10 +60,7 @@ module PathTreeHelpers
   def self.build_segment(selection)
     segment = {}
     segment = segment.merge(selection.arguments)
-    segment = segment.merge({
-                              columns: (selection.selections.map(&:name).to_set & ALL_EDITION_COLUMNS).index_with(true),
-                              details_fields: selection.selections.find { it.name == :details }&.selections&.map(&:name) || []
-                            })
+    segment = segment.merge({ columns: (selection.selections.map(&:name).to_set & ALL_EDITION_COLUMNS).index_with(true) })
     segment
   end
 

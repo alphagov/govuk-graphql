@@ -12,7 +12,7 @@ class ExpandedEditionDataset
 
     paths_from_json_sql = <<~SQL
       SELECT path, next, columns, details_fields
-      FROM json_to_recordset(?) AS paths(path text[], next text, columns jsonb, details_fields text[])
+      FROM json_to_recordset(?) AS paths(path text[], next text, columns jsonb)
     SQL
 
     link_type_ds = db[paths_from_json_sql, :$link_type_paths]
