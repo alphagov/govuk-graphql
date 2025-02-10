@@ -1,5 +1,13 @@
 # govuk-graphql
 
+---
+
+**EXPERIMENTAL - DO NOT USE IN PRODUCTION**
+
+**Ask Richard Towers if you want more details about this repository**
+
+----
+
 This is a proof of concept [GraphQL][graphql] API for GOV.UK.
 
 It uses [Publishing API][publishing_api]'s database to efficiently serve the content needed to render pages on GOV.UK.
