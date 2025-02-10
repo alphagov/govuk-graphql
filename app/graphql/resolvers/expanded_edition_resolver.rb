@@ -23,6 +23,7 @@ module Resolvers
                  reverse_link_type_paths: Sequel.pg_json_wrap(reverse_paths),
                  base_path:
                )
+      return nil if rows.empty?
 
       PathTreeHelpers.nest_results(rows)
     end
