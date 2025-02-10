@@ -4,6 +4,7 @@ gem "rails", "~> 8.0.1"
 
 gem "graphql", "~> 2.4"
 
+gem "govspeak", "~> 10.0"
 gem "sequel", "~> 5.89"
 gem "pg", "~> 1.5"
 gem "sequel_pg", "~> 1.17", require: "sequel"

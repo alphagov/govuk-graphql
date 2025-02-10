@@ -12,7 +12,7 @@ module Types
     field :beta, GraphQL::Types::JSON, null: true
     field :beta_message, GraphQL::Types::JSON, null: true
     field :blocks, GraphQL::Types::JSON, null: true
-    field :body, GraphQL::Types::JSON, null: true
+    field :body, String, null: true
     field :born, GraphQL::Types::JSON, null: true
     field :brand, GraphQL::Types::JSON, null: true
     field :breadcrumbs, GraphQL::Types::JSON, null: true
@@ -231,7 +231,22 @@ module Types
     def beta = object["beta"]
     def beta_message = object["beta_message"]
     def blocks = object["blocks"]
-    def body = object["body"]
+
+    def body
+      body = object["body"]
+      return nil unless body
+      return body if body.is_a?(String)
+      raise "Unexpected body format: #{body.class}" unless body.is_a?(Array)
+
+      case body.map(&:deep_symbolize_keys)
+      in [*, { content_type: "text/html", content: String => body }, *]
+        body
+      in [*, { content_type: "text/govspeak", content: String => body }, *]
+        # TODO - handle attachments and embedded content blocks
+        Govspeak::Document.new(body).to_html
+      end
+    end
+
     def born = object["born"]
     def brand = object["brand"]
     def breadcrumbs = object["breadcrumbs"]
