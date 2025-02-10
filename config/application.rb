@@ -45,5 +45,7 @@ module GovukGraphql
       Sequel.extension :pg_array_ops
       Sequel::Model.db.extension :pg_json, :pg_array
     end
+
+    config.sequel.load_database_tasks = false
   end
 end
