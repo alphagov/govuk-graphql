@@ -44,6 +44,8 @@ jobs:
       - name: Setup Postgres
         id: setup-postgres
         uses: alphagov/govuk-infrastructure/.github/actions/setup-postgres@main
+        with:
+          POSTGRES_DB: govuk_graphql_test
 
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git pkg-config
@@ -60,5 +62,5 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails test
+          DATABASE_URL: ${{ steps.setup-postgres.outputs.db-url }}
+        run: bin/rails db:test:prepare test
