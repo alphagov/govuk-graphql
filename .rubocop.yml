@@ -1,8 +1,18 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+# .rubocop.yml
+inherit_gem:
+  rubocop-govuk:
+    - config/default.yml
 
-# Overwrite or add rules to create your own house style
+inherit_mode:
+  merge:
+    - Exclude
+
+# **************************************************************
+# TRY NOT TO ADD OVERRIDES IN THIS FILE
 #
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+# This repo is configured to follow the RuboCop GOV.UK styleguide.
+# Any rules you override here will cause this repo to diverge from
+# the way we write code in all other GOV.UK repos.
+#
+# See https://github.com/alphagov/rubocop-govuk/blob/main/CONTRIBUTING.md
+# **************************************************************
