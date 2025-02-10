@@ -20,9 +20,8 @@
 !/log/.keep
 !/tmp/.keep
 
-# Ignore pidfiles, but keep the directory.
-/tmp/pids/*
-!/tmp/pids/.keep
+# Ignore tmp
+/tmp
 
 # Ignore storage (uploaded files in development and any SQLite databases).
 /storage/*

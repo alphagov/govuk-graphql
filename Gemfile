@@ -10,6 +10,7 @@ gem "pg", "~> 1.5"
 gem "sequel_pg", "~> 1.17", require: "sequel"
 gem "sequel-rails", "~> 1.2"
 gem "memo_wise", "~> 1.10"
+gem "bootsnap", require: false
 
 gem "puma", ">= 5.0"
 
