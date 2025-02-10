@@ -11,7 +11,7 @@ development:
 
 test:
   <<: *default
-  database: publishing_api_test
+  database: govuk_graphql_test
   url: <%= ENV["DATABASE_URL"]%>
 
 production:
