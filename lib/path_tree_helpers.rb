@@ -50,18 +50,17 @@ module PathTreeHelpers
   end
 
   def self.extract_paths(lookahead, current_path = [])
-    [ current_path ].compact + lookahead.selections
+    [current_path].compact + lookahead.selections
                                         .filter { it.name == :links }
                                         .flat_map(&:selections)
                                         .filter { it.name == :links_of_type }
-                                        .flat_map { extract_paths(it, current_path + [ build_segment(it) ]) }
+                                        .flat_map { extract_paths(it, current_path + [build_segment(it)]) }
   end
 
   def self.build_segment(selection)
     segment = {}
     segment = segment.merge(selection.arguments)
-    segment = segment.merge({ columns: (selection.selections.map(&:name).to_set & ALL_EDITION_COLUMNS).index_with(true) })
-    segment
+    segment.merge({ columns: (selection.selections.map(&:name).to_set & ALL_EDITION_COLUMNS).index_with(true) })
   end
 
   def self.nest_results(rows)
@@ -81,11 +80,12 @@ module PathTreeHelpers
   def self.nest(node, rows_by_parent)
     children = rows_by_parent[node[:id_path]]
     return node unless children
+
     children_grouped_by_link_type = children
                                      .map { |child| nest(child, rows_by_parent) }
                                      .group_by { |child| child[:path].last }
     node.merge(
-      links: children_grouped_by_link_type
+      links: children_grouped_by_link_type,
     )
   end
 end

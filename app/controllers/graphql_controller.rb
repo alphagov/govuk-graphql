@@ -18,10 +18,11 @@ class GraphqlController < ApplicationController
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
+
     handle_error_in_development(e)
   end
 
-  private
+private
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)

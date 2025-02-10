@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Resolvers
   class ExpandedEditionResolver < BaseResolver
     type Types::EditionType, null: true
@@ -8,7 +9,7 @@ module Resolvers
     argument :include_drafts, Boolean, required: false, default_value: false
     argument :include_withdrawn, Boolean, required: false, default_value: false
     argument :locale, String, required: false, default_value: "en"
-    extras [ :lookahead ]
+    extras [:lookahead]
 
     def initialize(*args, **kwargs, &block)
       super
@@ -21,7 +22,7 @@ module Resolvers
                .call(
                  link_type_paths: Sequel.pg_json_wrap(forward_paths),
                  reverse_link_type_paths: Sequel.pg_json_wrap(reverse_paths),
-                 base_path:
+                 base_path:,
                )
       return nil if rows.empty?
 

@@ -14,22 +14,22 @@ class ExpandedEditionDataset
       FROM json_to_recordset(?) AS paths(path text[], next text, columns jsonb)
     SQL
 
-    state_filter = [ "published", ("draft" if include_drafts), ("unpublished" if include_withdrawn) ].compact
-    locale_filter = [ locale, "en" ].uniq
+    state_filter = ["published", ("draft" if include_drafts), ("unpublished" if include_withdrawn)].compact
+    locale_filter = [locale, "en"].uniq
 
     link_type_ds = db[paths_from_json_sql, :$link_type_paths]
     reverse_link_type_ds = db[paths_from_json_sql, :$reverse_link_type_paths]
 
     root_selections = [
       Sequel.pg_array([], "text").as(:path),
-      Sequel.pg_array([ Sequel[:editions][:id] ], "int").as(:id_path),
+      Sequel.pg_array([Sequel[:editions][:id]], "int").as(:id_path),
       Sequel[:documents][:content_id].as(:content_id),
       Sequel[:documents][:locale].as(:locale),
       Sequel[:editions][:id].as(:edition_id),
       Sequel[0].as(:position),
       (Sequel[:unpublishings][:type].as(:unpublishing_type) if include_withdrawn),
       Sequel[:editions][:state],
-      *PathTreeHelpers::ALL_EDITION_COLUMNS.without(:state).map { Sequel[:editions][it] }
+      *PathTreeHelpers::ALL_EDITION_COLUMNS.without(:state).map { Sequel[:editions][it] },
     ].compact
     child_selections = [
       Sequel[:edition_links][:path].pg_array.push(:link_type).as(:path),
@@ -42,7 +42,7 @@ class ExpandedEditionDataset
       Sequel[:editions][:state],
       *PathTreeHelpers::ALL_EDITION_COLUMNS.without(:state).map do |col|
         Sequel.case({ Sequel.lit("(columns->'#{col}')::boolean") => Sequel[:editions][col] }, nil).as(col)
-      end
+      end,
     ].compact
 
     root_edition = db[:editions]
@@ -99,9 +99,9 @@ class ExpandedEditionDataset
       .then do
         if include_withdrawn
           it.where(Sequel.|(
-            { state: "unpublished", unpublishing_type: "withdrawal" },
-            Sequel.~(state: "unpublished")
-          ))
+                     { state: "unpublished", unpublishing_type: "withdrawal" },
+                     Sequel.~(state: "unpublished"),
+                   ))
         else
           it
         end
@@ -109,17 +109,18 @@ class ExpandedEditionDataset
 
     locale_ordering = Sequel.case({ { locale: locale } => 0 }, 1)
     state_ordering = Sequel.case({
-                                   { state: "draft" } => 0,
-                                   { state: "published" } => 1,
-                                   { state: "unpublished" } => 2
-                                 },
+      { state: "draft" } => 0,
+      { state: "published" } => 1,
+      { state: "unpublished" } => 2,
+    },
                                  3)
     candidate_editions
       .select_append(
         Sequel.function(:row_number)
               .over(
-                partition: [ :path, :content_id ],
-                order: [ locale_ordering, state_ordering, :type ]).as(:row_number)
+                partition: %i[path content_id],
+                order: [locale_ordering, state_ordering, :type],
+              ).as(:row_number),
       )
       .from_self(alias: :candidate_editions)
       .where(Sequel[:row_number] => 1)
@@ -128,7 +129,7 @@ class ExpandedEditionDataset
         "expanded_editions",
         locale,
         ("include_drafts" if include_drafts),
-        ("include_withdrawn" if include_withdrawn)
+        ("include_withdrawn" if include_withdrawn),
       ].compact.join("_").to_sym)
   end
   memo_wise :get_or_prepare_statement

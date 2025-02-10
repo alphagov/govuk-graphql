@@ -1,6 +1,6 @@
 module Types
   class DetailsType < Types::BaseObject
-    # TODO - make these fields more specific, instead of always JSON
+    # TODO: - make these fields more specific, instead of always JSON
     field :about_page_link_text, GraphQL::Types::JSON, null: true
     field :access_and_opening_times, GraphQL::Types::JSON, null: true
     field :acronym, GraphQL::Types::JSON, null: true
@@ -242,7 +242,7 @@ module Types
       in [*, { content_type: "text/html", content: String => body }, *]
         body
       in [*, { content_type: "text/govspeak", content: String => body }, *]
-        # TODO - handle attachments and embedded content blocks
+        # TODO: - handle attachments and embedded content blocks
         Govspeak::Document.new(body).to_html
       end
     end

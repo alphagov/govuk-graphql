@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'json'
+require "json"
 
 class GraphQLQueryBuilder
   # FIELDS_TO_IGNORE is a bit of a "to do" list really. We should implement these:
@@ -40,7 +40,7 @@ class GraphQLQueryBuilder
     GRAPHQL
   end
 
-  private
+private
 
   def build_fields(data, indent = 4)
     fields = data.flat_map do |entry|
@@ -50,13 +50,13 @@ class GraphQLQueryBuilder
       in [ "details", Hash => details ]
         [
           "details {",
-          details.map { |details_key, _| '  ' + details_key },
+          details.map { |details_key, _| "  " + details_key },
           "}",
         ]
       in [ "links", Hash => links ]
         [
           "links {",
-          links.map { |link_key, link_value| '  ' + build_links_query(link_key, link_value, indent + 2) },
+          links.map { |link_key, link_value| "  " + build_links_query(link_key, link_value, indent + 2) },
           "}",
         ]
       in [ String => key, String | true | false | nil ]
@@ -71,7 +71,7 @@ class GraphQLQueryBuilder
     reverse = REVERSE_LINK_TYPES.key?(key)
     [
       "#{key}: links_of_type(type: \"#{link_type}\"#{', reverse: true' if reverse}) {",
-      ' ' * (indent + 2) + build_fields(array.first, indent + 2),
+      " " * (indent + 2) + build_fields(array.first, indent + 2),
       "#{' ' * indent}}",
     ].join("\n")
   end
