@@ -50,13 +50,13 @@ private
       in [ "details", Hash => details ]
         [
           "details {",
-          details.map { |details_key, _| "  " + details_key },
+          details.map { |details_key, _| "  #{details_key}" },
           "}",
         ]
       in [ "links", Hash => links ]
         [
           "links {",
-          links.map { |link_key, link_value| "  " + build_links_query(link_key, link_value, indent + 2) },
+          links.map { |link_key, link_value| "  #{build_links_query(link_key, link_value, indent + 2)}" },
           "}",
         ]
       in [ String => key, String | true | false | nil ]
