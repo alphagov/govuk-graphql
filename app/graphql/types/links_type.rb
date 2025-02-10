@@ -5,6 +5,8 @@ module Types
       argument :reverse, Boolean, default_value: false
     end
 
+    # rubocop:disable Lint/UnusedMethodArgument
     def links_of_type(type:, reverse:) = object[type]
+    # rubocop:enable Lint/UnusedMethodArgument
   end
 end
