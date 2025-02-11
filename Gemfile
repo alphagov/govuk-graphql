@@ -5,6 +5,7 @@ gem "rails", "~> 8.0.1"
 gem "graphql", "~> 2.4"
 
 gem "bootsnap", require: false
+gem "gds-sso", "~> 19.1"
 gem "govspeak", "~> 10.0"
 gem "memo_wise", "~> 1.10"
 gem "pg", "~> 1.5"

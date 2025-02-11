@@ -86,3 +86,18 @@ DB.create_table?(:links, ignore_index_errors: true) do
   index [:target_content_id], name: :index_links_on_target_content_id
   index [:target_content_id, :link_type], name: :index_links_on_target_content_id_and_link_type
 end
+
+DB.create_table?(:users) do
+  primary_key :id
+  String :name
+  String :email
+  String :uid
+  String :organisation_slug
+  String :organisation_content_id
+  String :app_name
+  String :permissions, text: true
+  TrueClass :remotely_signed_out, default: false
+  TrueClass :disabled, default: false
+  DateTime :created_at
+  DateTime :updated_at
+end
