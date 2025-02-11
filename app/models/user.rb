@@ -7,6 +7,7 @@ class User < Sequel::Model
   # our model as an ActiveRecord model a bit:
   alias_method :remotely_signed_out?, :remotely_signed_out
   alias_method :update!, :update
+  alias_method :save!, :save
   class << self
     alias_method :create!, :create
   end
