@@ -1,15 +1,8 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
-  # If accessing from outside this domain, nullify the session
-  # This allows for outside API access while preventing CSRF attacks,
-  # but you'll have to authenticate your user separately
-  # protect_from_forgery with: :null_session
-
-  def initialize
-    super
-    @bearer_token = ENV.fetch("GRAPHQL_BEARER_TOKEN")
-  end
+  protect_from_forgery with: :null_session, if: -> { request.headers["Authorization"].present? }
+  protect_from_forgery with: :exception, unless: -> { request.headers["Authorization"].present? }
 
   def graphiql; end
 
