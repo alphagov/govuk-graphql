@@ -2,7 +2,7 @@
 
 require "json"
 
-class GraphQLQueryBuilder
+class GraphqlQueryBuilder
   # FIELDS_TO_IGNORE is a bit of a "to do" list really. We should implement these:
   FIELDS_TO_IGNORE = %w[
     api_path
@@ -76,7 +76,3 @@ private
     ].join("\n")
   end
 end
-
-content_store_response = JSON.parse(ARGF.read)
-query_builder = GraphQLQueryBuilder.new(content_store_response)
-puts query_builder.build_query
