@@ -66,10 +66,9 @@
 <script>
     const root = ReactDOM.createRoot(document.getElementById('graphiql'));
     const fetcher = GraphiQL.createFetcher({
-        url: 'http://localhost:3000/graphql',
+        url: '/graphql',
         headers: {
             'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content,
-            'Authorization': 'Bearer <%= @bearer_token %>'
         },
     });
     const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();
