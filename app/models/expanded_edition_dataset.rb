@@ -32,7 +32,7 @@ class ExpandedEditionDataset
       *PathTreeHelpers::ALL_EDITION_COLUMNS.without(:state).map { Sequel[:editions][it] },
     ].compact
     child_selections = [
-      Sequel[:edition_links][:path].pg_array.push(:link_type).as(:path),
+      Sequel[:edition_links][:path].pg_array.push(Sequel[:link_type].cast(:text)).as(:path),
       Sequel[:edition_links][:id_path].pg_array.push(Sequel[:editions][:id]).as(:id_path),
       Sequel[:documents][:content_id].as(:content_id),
       Sequel[:documents][:locale].as(:locale),
