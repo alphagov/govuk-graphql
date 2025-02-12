@@ -628,6 +628,7 @@ DEPENDENCIES
   debug
   gds-sso (~> 19.1)
   govspeak (~> 10.0)
+  govuk_app_config (~> 9.16)
   graphql (~> 2.4)
   memo_wise (~> 1.10)
   mutex_m
