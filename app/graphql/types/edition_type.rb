@@ -46,6 +46,17 @@ module Types
     field :withdrawn, Boolean, null: false
     def withdrawn = object[:unpublishing_type] == "withdrawal"
 
+    field :withdrawn_notice, GraphQL::Types::JSON, null: false
+    def withdrawn_notice
+      return {} unless withdrawn
+
+      withdrawn_at = (object[:unpublished_at] || object[:unpublishing_created_at]).iso8601
+      {
+        explanation: object[:explanation],
+        withdrawn_at:,
+      }
+    end
+
   private
 
     def website_root

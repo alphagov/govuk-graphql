@@ -26,6 +26,9 @@ class ExpandedEditionDataset
       Sequel[:editions][:id].as(:edition_id),
       Sequel[0].as(:position),
       (include_withdrawn ? Sequel[:unpublishings][:type] : Sequel[nil]).as(:unpublishing_type),
+      (include_withdrawn ? Sequel[:unpublishings][:explanation] : Sequel[nil]).as(:explanation),
+      (include_withdrawn ? Sequel[:unpublishings][:unpublished_at] : Sequel[nil]).as(:unpublished_at),
+      (include_withdrawn ? Sequel[:unpublishings][:created_at] : Sequel[nil]).as(:unpublishing_created_at),
       Sequel[:editions][:state],
       *PathTreeHelpers::ALL_EDITION_COLUMNS.without(:state).map { Sequel[:editions][it] },
     ].compact
@@ -37,6 +40,9 @@ class ExpandedEditionDataset
       Sequel[:editions][:id].as(:edition_id),
       Sequel[:links][:position],
       (include_withdrawn ? Sequel[:unpublishings][:type] : Sequel[nil]).as(:unpublishing_type),
+      (include_withdrawn ? Sequel[:unpublishings][:explanation] : Sequel[nil]).as(:explanation),
+      (include_withdrawn ? Sequel[:unpublishings][:unpublished_at] : Sequel[nil]).as(:unpublished_at),
+      (include_withdrawn ? Sequel[:unpublishings][:created_at] : Sequel[nil]).as(:unpublishing_created_at),
       Sequel[:editions][:state],
       *PathTreeHelpers::ALL_EDITION_COLUMNS.without(:state).map do |col|
         Sequel.case({ Sequel.lit("(columns->'#{col}')::boolean") => Sequel[:editions][col] }, nil).as(col)
