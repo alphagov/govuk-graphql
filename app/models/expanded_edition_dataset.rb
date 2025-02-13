@@ -7,8 +7,6 @@ class ExpandedEditionDataset
   def get_or_prepare_statement(include_drafts: false, include_withdrawn: false, locale: "en")
     db = Sequel::Model.db
 
-    # example of a withdrawn edition with a withdrawn parent: https://www.gov.uk/government/publications/revenue-and-customs-brief-10-2013-withdrawal-of-the-vat-exemption-for-supplies-of-research/revenue-and-customs-brief-10-2013-withdrawal-of-the-vat-exemption-for-supplies-of-research
-
     paths_from_json_sql = <<~SQL
       SELECT path, next, columns
       FROM json_to_recordset(?) AS paths(path text[], next text, columns jsonb)
@@ -27,7 +25,7 @@ class ExpandedEditionDataset
       Sequel[:documents][:locale].as(:locale),
       Sequel[:editions][:id].as(:edition_id),
       Sequel[0].as(:position),
-      (Sequel[:unpublishings][:type].as(:unpublishing_type) if include_withdrawn),
+      (include_withdrawn ? Sequel[:unpublishings][:type] : Sequel[nil]).as(:unpublishing_type),
       Sequel[:editions][:state],
       *PathTreeHelpers::ALL_EDITION_COLUMNS.without(:state).map { Sequel[:editions][it] },
     ].compact
@@ -38,7 +36,7 @@ class ExpandedEditionDataset
       Sequel[:documents][:locale].as(:locale),
       Sequel[:editions][:id].as(:edition_id),
       Sequel[:links][:position],
-      (Sequel[:unpublishings][:type].as(:unpublishing_type) if include_withdrawn),
+      (include_withdrawn ? Sequel[:unpublishings][:type] : Sequel[nil]).as(:unpublishing_type),
       Sequel[:editions][:state],
       *PathTreeHelpers::ALL_EDITION_COLUMNS.without(:state).map do |col|
         Sequel.case({ Sequel.lit("(columns->'#{col}')::boolean") => Sequel[:editions][col] }, nil).as(col)
