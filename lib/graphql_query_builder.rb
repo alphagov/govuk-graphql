@@ -5,9 +5,6 @@ require "json"
 class GraphqlQueryBuilder
   # FIELDS_TO_IGNORE is a bit of a "to do" list really. We should implement these:
   FIELDS_TO_IGNORE = %w[
-    api_path
-    api_url
-    web_url
     withdrawn
     publishing_scheduled_at
     scheduled_publishing_delay_seconds
