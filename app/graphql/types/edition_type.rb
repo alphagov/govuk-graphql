@@ -43,6 +43,11 @@ module Types
     field :links, LinksType
     field :locale, String, null: false
 
+    field :withdrawn, Boolean, null: false
+    def withdrawn = object[:unpublishing_type] == "withdrawal"
+
+  private
+
     def website_root
       ENV.fetch("GOVUK_WEBSITE_ROOT", "https://www.gov.uk")
     end
