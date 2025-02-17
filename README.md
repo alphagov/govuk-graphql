@@ -281,7 +281,7 @@ Completed 200 OK in 379ms (Views: 4.2ms | GC: 37.0ms)
 
 The big scary SQL query is in `app/graphql/resolvers/expanded_edition_resolver.rb`.
 
-The code to walk the graphql loookahead and build link type paths, and the code to build a tree from
+The code to walk the graphql lookahead and build link type paths, and the code to build a tree from
 the database results is in `lib/tasks/path_tree_helpers.rb`.
 
 
