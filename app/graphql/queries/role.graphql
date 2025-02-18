@@ -1,0 +1,157 @@
+query role($base_path: String!) {
+  edition(base_path: $base_path) {
+    analytics_identifier
+    base_path
+    content_id
+    description
+    details {
+      attends_cabinet_type
+      body
+      role_payment_type
+      seniority
+      supports_historical_accounts
+      whip_organisation
+    }
+    document_type
+    first_published_at
+    links {
+      available_translations {
+        api_path
+        api_url
+        base_path
+        content_id
+        document_type
+        locale
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      ordered_parent_organisations: links_of_type(type: "ordered_parent_organisations") {
+        analytics_identifier
+        api_path
+        api_url
+        base_path
+        content_id
+        details {
+          acronym
+          brand
+          default_news_image
+          logo
+          organisation_govuk_status
+        }
+        document_type
+        locale
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      organisations: links_of_type(type: "organisations") {
+        analytics_identifier
+        api_path
+        api_url
+        base_path
+        content_id
+        details {
+          acronym
+          brand
+          default_news_image
+          logo
+          organisation_govuk_status
+        }
+        document_type
+        locale
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      role_appointments: links_of_type(type: "TODO - can be person or role, depending on the expected type of its parent", reverse: true) {
+        content_id
+        details {
+          current
+          ended_on
+          person_appointment_order
+          started_on
+        }
+        document_type
+        links {
+          person: links_of_type(type: "person") {
+            api_path
+            api_url
+            base_path
+            content_id
+            details {
+              body
+              image
+            }
+            document_type
+            locale
+            public_updated_at
+            schema_name
+            title
+            web_url
+            withdrawn
+          }
+          role: links_of_type(type: "role") {
+            api_path
+            api_url
+            base_path
+            content_id
+            details {
+              body
+              role_payment_type
+              seniority
+              whip_organisation
+            }
+            document_type
+            links {
+              ordered_parent_organisations: links_of_type(type: "ordered_parent_organisations") {
+                analytics_identifier
+                api_path
+                api_url
+                base_path
+                content_id
+                details {
+                  acronym
+                  brand
+                  default_news_image
+                  logo
+                  organisation_govuk_status
+                }
+                document_type
+                locale
+                schema_name
+                title
+                web_url
+                withdrawn
+              }
+            }
+            locale
+            public_updated_at
+            schema_name
+            title
+            web_url
+            withdrawn
+          }
+        }
+        locale
+        public_updated_at
+        schema_name
+        title
+        withdrawn
+      }
+    }
+    locale
+    phase
+    public_updated_at
+    publishing_app
+    publishing_request_id
+    rendering_app
+    schema_name
+    title
+    updated_at
+  }
+}

@@ -1,0 +1,163 @@
+query contact($base_path: String!) {
+  edition(base_path: $base_path) {
+    analytics_identifier
+    base_path
+    content_id
+    description
+    details {
+      contact_form_links
+      contact_groups
+      description
+      email_addresses
+      language
+      more_info_contact_form
+      more_info_email_address
+      more_info_phone_number
+      more_info_post_address
+      more_info_webchat
+      phone_numbers
+      post_addresses
+      query_response_time
+      quick_links
+      slug
+      title
+    }
+    document_type
+    first_published_at
+    links {
+      available_translations {
+        api_path
+        api_url
+        base_path
+        content_id
+        document_type
+        locale
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      document_collections: links_of_type(type: "documents", reverse: true) {
+        api_path
+        api_url
+        base_path
+        content_id
+        document_type
+        links {
+          documents: links_of_type(type: "documents") {
+            api_path
+            api_url
+            base_path
+            content_id
+            details {
+              contact_form_links
+              description
+              email_addresses
+              phone_numbers
+              post_addresses
+              title
+            }
+            document_type
+            locale
+            public_updated_at
+            schema_name
+            title
+            web_url
+            withdrawn
+          }
+        }
+        locale
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      organisations: links_of_type(type: "organisations") {
+        analytics_identifier
+        api_path
+        api_url
+        base_path
+        content_id
+        details {
+          acronym
+          brand
+          default_news_image
+          logo
+          organisation_govuk_status
+        }
+        document_type
+        locale
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      parent: links_of_type(type: "parent") {
+        api_path
+        api_url
+        base_path
+        content_id
+        document_type
+        links {
+          parent: links_of_type(type: "parent") {
+            analytics_identifier
+            api_path
+            api_url
+            base_path
+            content_id
+            details {
+              acronym
+              brand
+              default_news_image
+              logo
+              organisation_govuk_status
+            }
+            document_type
+            locale
+            schema_name
+            title
+            web_url
+            withdrawn
+          }
+        }
+        locale
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
+        analytics_identifier
+        api_path
+        api_url
+        base_path
+        content_id
+        details {
+          acronym
+          brand
+          default_news_image
+          logo
+          organisation_govuk_status
+        }
+        document_type
+        locale
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+    }
+    locale
+    phase
+    public_updated_at
+    publishing_app
+    publishing_request_id
+    rendering_app
+    schema_name
+    title
+    updated_at
+  }
+}

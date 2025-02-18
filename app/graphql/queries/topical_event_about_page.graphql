@@ -1,0 +1,51 @@
+query topical_event_about_page($base_path: String!) {
+  edition(base_path: $base_path) {
+    analytics_identifier
+    base_path
+    content_id
+    description
+    details {
+      body
+      read_more
+    }
+    document_type
+    first_published_at
+    links {
+      available_translations {
+        api_path
+        api_url
+        base_path
+        content_id
+        document_type
+        locale
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      parent: links_of_type(type: "parent") {
+        api_path
+        api_url
+        base_path
+        content_id
+        document_type
+        locale
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+    }
+    locale
+    phase
+    public_updated_at
+    publishing_app
+    publishing_request_id
+    rendering_app
+    schema_name
+    title
+    updated_at
+  }
+}
