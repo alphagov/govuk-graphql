@@ -10,7 +10,9 @@ class ContentStoreShimController < ApplicationController
       render json: { error: "Not found" }, status: :not_found
     else
       # Find the appropriate graphql query for this schema
-      File.open(Rails.root.join("app/graphql/queries/#{edition[:schema_name]}.graphql"), "r") do |file|
+      schema_name = edition.fetch(:schema_name)
+      set_prometheus_labels(schema_name)
+      File.open(Rails.root.join("app/graphql/queries/#{schema_name}.graphql"), "r") do |file|
         query = file.read
         # Execute the query
         result = GovukGraphqlSchema.execute(query, variables: { base_path: base_path })
