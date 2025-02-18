@@ -25,7 +25,15 @@ module Types
     field :published_at, String, null: true
     field :publishing_api_first_published_at, String, null: true
     field :publishing_api_last_edited_at, String, null: true
+
     field :details, Types::DetailsType, null: false
+    def details = object[:details]
+                    &.symbolize_keys
+                    &.merge(
+                      document_id: object[:document_id],
+                      user_facing_version: object[:user_facing_version],
+                    )
+
     field :routes, GraphQL::Types::JSON, null: true
     field :redirects, GraphQL::Types::JSON, null: true
     field :last_edited_by_editor_id, String, null: true

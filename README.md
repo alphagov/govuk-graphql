@@ -11,11 +11,11 @@
 TODO list
 
 - [x] Implement available_translations
-- [ ] Implement change notes
-- [ ] Implement embedded editions / attachments
-- [ ] Refactor to use database views to simplify recursive CTE
+- [x] Implement change history
 - [ ] Implement a content-store shim
 - [ ] Implement a compare-with-content-store endpoint using hashdiff
+- [ ] Implement embedded editions / attachments
+- [ ] Refactor to use database views to simplify recursive CTE
 
 ----
 
