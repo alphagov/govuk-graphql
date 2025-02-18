@@ -6,7 +6,7 @@ module Types
     end
 
     # rubocop:disable Lint/UnusedMethodArgument
-    def links_of_type(type:, reverse:) = object[type]
+    def links_of_type(type:, reverse:) = object.dig(:links, type)
     # rubocop:enable Lint/UnusedMethodArgument
   end
 end
