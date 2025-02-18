@@ -9,6 +9,10 @@ class GraphqlQueryBuilder
     scheduled_publishing_delay_seconds
   ].freeze
 
+  SPECIAL_LINK_TYPES = %w[
+    available_translations
+  ].freeze
+
   REVERSE_LINK_TYPES = {
     "children" => "parent",
     "document_collections" => "documents",
@@ -55,7 +59,7 @@ private
           links.map { |link_key, link_value| "  #{build_links_query(link_key, link_value, indent + 2)}" },
           "}",
         ]
-      in [ String => key, String | true | false | nil ]
+      in [ String => key, String | Numeric | true | false | nil ]
         key unless FIELDS_TO_IGNORE.include?(key)
       end
     end
@@ -65,10 +69,19 @@ private
   def build_links_query(key, array, indent)
     link_type = REVERSE_LINK_TYPES[key] || key
     reverse = REVERSE_LINK_TYPES.key?(key)
-    [
-      "#{key}: links_of_type(type: \"#{link_type}\"#{', reverse: true' if reverse}) {",
-      " " * (indent + 2) + build_fields(array.first, indent + 2),
-      "#{' ' * indent}}",
-    ].join("\n")
+
+    if SPECIAL_LINK_TYPES.include?(key)
+      [
+        "#{key} {",
+        " " * (indent + 2) + build_fields(array.first, indent + 2),
+        "#{' ' * indent}}",
+      ].join("\n")
+    else
+      [
+        "#{key}: links_of_type(type: \"#{link_type}\"#{', reverse: true' if reverse}) {",
+        " " * (indent + 2) + build_fields(array.first, indent + 2),
+        "#{' ' * indent}}",
+      ].join("\n")
+    end
   end
 end
