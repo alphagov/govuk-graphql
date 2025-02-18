@@ -15,6 +15,10 @@ class GraphqlController < ApplicationController
       # current_user: current_user,
     }
     result = GovukGraphqlSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+
+    schema_name = result.dig("data", "edition", "schema_name")
+    set_prometheus_labels(schema_name) if schema_name.present?
+
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
