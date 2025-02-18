@@ -1,5 +1,6 @@
 require "csv"
 
+desc "Generate queries for each of the schemas in the editions table, based on some random example items"
 task suggest_queries: :environment do
   # with editions as (
   #   select
@@ -265,7 +266,7 @@ task suggest_queries: :environment do
       File.open(Rails.root.join("app/graphql/queries/#{schema_name}.graphql"), "w") do |file|
         file.write(result.to_h.dig("data", "suggest_query"))
       end
-    rescue
+    rescue StandardError
       puts "Failed to suggest query for #{schema_name} with base_path #{base_path}"
     end
   end
