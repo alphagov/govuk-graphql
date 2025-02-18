@@ -1,3 +1,24 @@
+fragment Taxon on Edition {
+  api_path
+  api_url
+  base_path
+  content_id
+  description
+  details {
+    internal_name
+    notes_for_editors
+    visible_to_departmental_editors
+  }
+  document_type
+  locale
+  phase
+  public_updated_at
+  schema_name
+  title
+  web_url
+  withdrawn
+}
+
 query taxon($base_path: String!) {
   edition(base_path: $base_path) {
     analytics_identifier
@@ -12,26 +33,6 @@ query taxon($base_path: String!) {
     document_type
     first_published_at
     links {
-      associated_taxons: links_of_type(type: "associated_taxons") {
-        api_path
-        api_url
-        base_path
-        content_id
-        description
-        details {
-          internal_name
-          notes_for_editors
-          visible_to_departmental_editors
-        }
-        document_type
-        locale
-        phase
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
       available_translations {
         api_path
         api_url
@@ -45,48 +46,36 @@ query taxon($base_path: String!) {
         web_url
         withdrawn
       }
-      parent_taxons: links_of_type(type: "parent_taxons") {
-        api_path
-        api_url
-        base_path
-        content_id
-        description
-        details {
-          internal_name
-          notes_for_editors
-          visible_to_departmental_editors
-        }
-        document_type
+      associated_taxons: links_of_type(type: "associated_taxons") {
+        ...Taxon
+      }
+      # TODO: implement taxons as a special type of field so they can be arbitrarily nested
+      # (or just work out the deepest point in the tree and use that?)
+      child_taxons: links_of_type(type: "parent_taxons", reverse: true) {
+        ...Taxon
         links {
-          parent_taxons: links_of_type(type: "parent_taxons") {
-            api_path
-            api_url
-            base_path
-            content_id
-            description
-            details {
-              internal_name
-              notes_for_editors
-              url_override
-              visible_to_departmental_editors
+          child_taxons: links_of_type(type: "parent_taxons", reverse: true) {
+            ...Taxon
+            links {
+              child_taxons: links_of_type(type: "parent_taxons", reverse: true) {
+                ...Taxon
+              }
             }
-            document_type
-            locale
-            phase
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
           }
         }
-        locale
-        phase
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
+      }
+      parent_taxons: links_of_type(type: "parent_taxons") {
+        ...Taxon
+        links {
+          parent_taxons: links_of_type(type: "parent_taxons") {
+            ...Taxon
+            links {
+              parent_taxons: links_of_type(type: "parent_taxons") {
+                ...Taxon
+              }
+            }
+          }
+        }
       }
     }
     locale
