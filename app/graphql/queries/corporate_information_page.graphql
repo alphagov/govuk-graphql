@@ -1,0 +1,118 @@
+query corporate_information_page($base_path: String!) {
+  edition(base_path: $base_path) {
+    analytics_identifier
+    base_path
+    content_id
+    description
+    details {
+      attachments
+      body
+      change_history
+      organisation
+      tags
+    }
+    document_type
+    first_published_at
+    links {
+      available_translations {
+        api_path
+        api_url
+        base_path
+        content_id
+        document_type
+        locale
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      organisations: links_of_type(type: "organisations") {
+        analytics_identifier
+        api_path
+        api_url
+        base_path
+        content_id
+        details {
+          acronym
+          brand
+          default_news_image
+          logo
+          organisation_govuk_status
+        }
+        document_type
+        locale
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      taxons: links_of_type(type: "taxons") {
+        api_path
+        api_url
+        base_path
+        content_id
+        description
+        details {
+          internal_name
+          notes_for_editors
+          visible_to_departmental_editors
+        }
+        document_type
+        links {
+          parent_taxons: links_of_type(type: "parent_taxons") {
+            api_path
+            api_url
+            base_path
+            content_id
+            description
+            details {
+              internal_name
+              notes_for_editors
+              visible_to_departmental_editors
+            }
+            document_type
+            links {
+              root_taxon: links_of_type(type: "root_taxon") {
+                api_path
+                api_url
+                base_path
+                content_id
+                document_type
+                locale
+                public_updated_at
+                schema_name
+                title
+                web_url
+                withdrawn
+              }
+            }
+            locale
+            phase
+            public_updated_at
+            schema_name
+            title
+            web_url
+            withdrawn
+          }
+        }
+        locale
+        phase
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+    }
+    locale
+    phase
+    public_updated_at
+    publishing_app
+    publishing_request_id
+    rendering_app
+    schema_name
+    title
+    updated_at
+  }
+}

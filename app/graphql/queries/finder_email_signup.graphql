@@ -1,0 +1,74 @@
+query finder_email_signup($base_path: String!) {
+  edition(base_path: $base_path) {
+    analytics_identifier
+    base_path
+    content_id
+    description
+    details {
+      beta
+      email_filter_by
+      email_filter_facets
+      filter
+      subscription_list_title_prefix
+    }
+    document_type
+    first_published_at
+    links {
+      available_translations {
+        api_path
+        api_url
+        base_path
+        content_id
+        document_type
+        locale
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      organisations: links_of_type(type: "organisations") {
+        analytics_identifier
+        api_path
+        api_url
+        base_path
+        content_id
+        details {
+          acronym
+          brand
+          default_news_image
+          logo
+          organisation_govuk_status
+        }
+        document_type
+        locale
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+      related: links_of_type(type: "related") {
+        api_path
+        api_url
+        base_path
+        content_id
+        document_type
+        locale
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
+    }
+    locale
+    phase
+    public_updated_at
+    publishing_app
+    publishing_request_id
+    rendering_app
+    schema_name
+    title
+    updated_at
+  }
+}
