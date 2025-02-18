@@ -41,6 +41,8 @@ module Types
     def web_url = "#{website_root}#{object[:base_path]}".chomp("/")
 
     field :links, LinksType
+    def links = object
+
     field :locale, String, null: false
 
     field :withdrawn, Boolean, null: false

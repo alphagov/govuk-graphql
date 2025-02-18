@@ -8,6 +8,17 @@
 
 ----
 
+TODO list
+
+- [x] Implement available_translations
+- [ ] Implement change notes
+- [ ] Implement embedded editions / attachments
+- [ ] Refactor to use database views to simplify recursive CTE
+- [ ] Implement a content-store shim
+- [ ] Implement a compare-with-content-store endpoint using hashdiff
+
+----
+
 This is a proof of concept [GraphQL][graphql] API for GOV.UK.
 
 It uses [Publishing API][publishing_api]'s database to efficiently serve the content needed to render pages on GOV.UK.

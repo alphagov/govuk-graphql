@@ -26,7 +26,7 @@ module Resolvers
                )
       return nil if rows.empty?
 
-      PathTreeHelpers.nest_results(rows)
+      PathTreeHelpers.nest_results(rows).merge(include_drafts:, include_withdrawn:)
     end
   end
 end
