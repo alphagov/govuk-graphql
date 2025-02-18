@@ -7,9 +7,26 @@ module Types
     end
 
     def available_translations
+      state_filter = [
+        "published",
+        ("draft" if object[:include_drafts]),
+        ("unpublished" if object[:include_withdrawn]),
+      ].compact
+
       Sequel::Model.db[:editions]
                    .join(:documents, id: :document_id, content_id: object[:content_id])
-                   .where(state: object[:include_drafts] ? %w[published draft] : %w[published])
+                   .then {
+                     if object[:include_withdrawn]
+                       it.left_outer_join(:unpublishings, edition_id: Sequel[:editions][:id])
+                         .where(Sequel.|(
+                                  { state: "unpublished", Sequel[:unpublishings][:type] => "withdrawal" },
+                                  Sequel.~(state: "unpublished"),
+                                ))
+                     else
+                       it
+                     end
+                   }
+                   .where(state: state_filter)
     end
 
     # rubocop:disable Lint/UnusedMethodArgument
