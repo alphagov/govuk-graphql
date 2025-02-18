@@ -81,6 +81,7 @@ module PathTreeHelpers
     children = rows_by_parent[node[:id_path]]
     return node unless children
 
+    # TODO: this can't tell the difference between parent_taxon and child_taxon (which is a reverse link of type parent_taxon)
     children_grouped_by_link_type = children
                                      .map { |child| nest(child, rows_by_parent) }
                                      .group_by { |child| child[:path].last }
