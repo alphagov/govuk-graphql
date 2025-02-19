@@ -24,8 +24,8 @@ module Types
       in [*, { content_type: "text/html", content: String => body }, *]
         body
       in [*, { content_type: "text/govspeak", content: String => body }, *]
-        # TODO: - handle attachments and embedded content blocks
-        Govspeak::Document.new(body).to_html
+        # TODO: - handle embedded content blocks
+        Govspeak::Document.new(body, { attachments: object[:attachments] }).to_html
       end
     end
 

@@ -12,10 +12,11 @@ TODO list
 
 - [x] Implement available_translations
 - [x] Implement change history
-- [ ] Implement a content-store shim
+- [x] Implement a content-store shim
 - [ ] Implement a compare-with-content-store endpoint using hashdiff
-- [ ] Implement embedded editions / attachments
+- [ ] Implement embedded editions
 - [ ] Refactor to use database views to simplify recursive CTE
+- [ ] Refactor so the code is vaguely understandable and maintainable
 
 ----
 
