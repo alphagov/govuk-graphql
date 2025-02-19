@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   post "/graphql", to: "graphql#execute"
+  get "/api/content/compare(/*base_path)", to: "content_store_shim#compare_content_item"
   get "/api/content(/*base_path)", to: "content_store_shim#content_item"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
