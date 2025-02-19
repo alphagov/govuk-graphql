@@ -8,8 +8,8 @@ class ExpandedEditionDataset
     db = Sequel::Model.db
 
     paths_from_json_sql = <<~SQL
-      SELECT path, next, columns
-      FROM json_to_recordset(?) AS paths(path text[], next text, columns jsonb)
+      SELECT path, next, next_alias, columns
+      FROM json_to_recordset(?) AS paths(path text[], next text, next_alias text, columns jsonb)
     SQL
 
     state_filter = ["published", ("draft" if include_drafts), ("unpublished" if include_withdrawn)].compact
@@ -34,7 +34,7 @@ class ExpandedEditionDataset
       *PathTreeHelpers::ALL_EDITION_COLUMNS.without(:state).map { Sequel[:editions][it] },
     ].compact
     child_selections = [
-      Sequel[:edition_links][:path].pg_array.push(Sequel[:link_type].cast(:text)).as(:path),
+      Sequel[:edition_links][:path].pg_array.push(Sequel[:next_alias]).as(:path),
       Sequel[:edition_links][:id_path].pg_array.push(Sequel[:editions][:id]).as(:id_path),
       Sequel[:documents][:content_id].as(:content_id),
       Sequel[:documents][:id].as(:document_id),

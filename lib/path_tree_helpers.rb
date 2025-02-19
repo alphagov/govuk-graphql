@@ -43,8 +43,9 @@ module PathTreeHelpers
 
   def self.build_path(raw_path)
     {
-      path: raw_path[0...-1].map { it[:type] },
+      path: raw_path[0...-1].map { it[:alias] || it[:type] },
       next: raw_path.last[:type],
+      next_alias: raw_path.last[:alias] || raw_path.last[:type],
       columns: raw_path.last[:columns],
     }
   end
@@ -60,6 +61,8 @@ module PathTreeHelpers
   def self.build_segment(selection)
     segment = {}
     segment = segment.merge(selection.arguments)
+    selection.ast_nodes.map(&:alias) => [ selection_alias ]
+    segment = segment.merge({ alias: selection_alias }) if selection_alias.present?
     segment.merge({ columns: (selection.selections.map(&:name).to_set & ALL_EDITION_COLUMNS).index_with(true) })
   end
 
