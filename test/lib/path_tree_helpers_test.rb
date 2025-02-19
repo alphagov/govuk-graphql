@@ -5,30 +5,33 @@ require_relative "../../lib/path_tree_helpers"
 require_relative "../test_helper"
 
 class PathTreeHelpersTest < Minitest::Test
-  Selection = Data.define(:name, :arguments, :selections)
+  AstNode = Data.define(:alias)
+  Selection = Data.define(:name, :ast_nodes, :arguments, :selections)
+
   def test_extract_paths
+    ast_nodes = [AstNode.new(alias: nil)]
     lookahead = Minitest::Mock.new
     lookahead.expect :selections, [
-      Selection.new(name: :links, arguments: {}, selections: [
-        Selection.new(name: :links_of_type, arguments: { name: "person" }, selections: [
-          Selection.new(name: :base_path, arguments: {}, selections: []),
-          Selection.new(name: :title, arguments: {}, selections: []),
-          Selection.new(name: :links, arguments: {}, selections: [
-            Selection.new(name: :links_of_type, arguments: { name: "person", reverse: true }, selections: [
-              Selection.new(name: :base_path, arguments: {}, selections: []),
-              Selection.new(name: :title, arguments: {}, selections: []),
-              Selection.new(name: :links, arguments: {}, selections: [
-                Selection.new(name: :links_of_type, arguments: { name: "role" }, selections: [
-                  Selection.new(name: :base_path, arguments: {}, selections: []),
-                  Selection.new(name: :title, arguments: {}, selections: []),
+      Selection.new(name: :links, ast_nodes:, arguments: {}, selections: [
+        Selection.new(name: :links_of_type, ast_nodes:, arguments: { name: "person" }, selections: [
+          Selection.new(name: :base_path, ast_nodes: [], arguments: {}, selections: []),
+          Selection.new(name: :title, ast_nodes:, arguments: {}, selections: []),
+          Selection.new(name: :links, ast_nodes:, arguments: {}, selections: [
+            Selection.new(name: :links_of_type, ast_nodes:, arguments: { name: "person", reverse: true }, selections: [
+              Selection.new(name: :base_path, ast_nodes:, arguments: {}, selections: []),
+              Selection.new(name: :title, ast_nodes:, arguments: {}, selections: []),
+              Selection.new(name: :links, ast_nodes:, arguments: {}, selections: [
+                Selection.new(name: :links_of_type, ast_nodes:, arguments: { name: "role" }, selections: [
+                  Selection.new(name: :base_path, ast_nodes:, arguments: {}, selections: []),
+                  Selection.new(name: :title, ast_nodes:, arguments: {}, selections: []),
                 ]),
               ]),
             ]),
           ]),
         ]),
-        Selection.new(name: :links_of_type, arguments: { name: "organisation" }, selections: [
-          Selection.new(name: :base_path, arguments: {}, selections: []),
-          Selection.new(name: :title, arguments: {}, selections: []),
+        Selection.new(name: :links_of_type, ast_nodes:, arguments: { name: "organisation" }, selections: [
+          Selection.new(name: :base_path, ast_nodes:, arguments: {}, selections: []),
+          Selection.new(name: :title, ast_nodes:, arguments: {}, selections: []),
         ]),
       ]),
     ]
