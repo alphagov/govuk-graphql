@@ -42,13 +42,13 @@ module Types
     field :content_id, String, null: false
 
     field :api_path, String, null: false
-    def api_path = "/api/content#{object[:base_path]}".chomp("/")
+    def api_path = "/api/content#{object[:base_path]}"
 
     field :api_url, String, null: false
-    def api_url = "#{website_root}/api/content#{object[:base_path]}".chomp("/")
+    def api_url = "#{website_root}/api/content#{object[:base_path]}"
 
     field :web_url, String, null: false
-    def web_url = "#{website_root}#{object[:base_path]}".chomp("/")
+    def web_url = "#{website_root}#{object[:base_path]}"
 
     field :links, LinksType
     def links = object
