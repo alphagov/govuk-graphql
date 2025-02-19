@@ -73,9 +73,18 @@ query taxon($base_path: String!) {
               parent_taxons: links_of_type(type: "parent_taxons") {
                 ...Taxon
               }
+              root_taxon: links_of_type(type: "root_taxon") {
+                ...Taxon
+              }
             }
           }
+          root_taxon: links_of_type(type: "root_taxon") {
+            ...Taxon
+          }
         }
+      }
+      root_taxon: links_of_type(type: "root_taxon") {
+        ...Taxon
       }
     }
     locale
