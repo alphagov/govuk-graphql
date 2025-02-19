@@ -1,24 +1,3 @@
-fragment Taxon on Edition {
-  api_path
-  api_url
-  base_path
-  content_id
-  description
-  details {
-    internal_name
-    notes_for_editors
-    visible_to_departmental_editors
-  }
-  document_type
-  locale
-  phase
-  public_updated_at
-  schema_name
-  title
-  web_url
-  withdrawn
-}
-
 query taxon($base_path: String!) {
   edition(base_path: $base_path) {
     analytics_identifier
@@ -33,6 +12,26 @@ query taxon($base_path: String!) {
     document_type
     first_published_at
     links {
+      associated_taxons: links_of_type(type: "associated_taxons") {
+        api_path
+        api_url
+        base_path
+        content_id
+        description
+        details {
+          internal_name
+          notes_for_editors
+          visible_to_departmental_editors
+        }
+        document_type
+        locale
+        phase
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
+      }
       available_translations {
         api_path
         api_url
@@ -46,45 +45,48 @@ query taxon($base_path: String!) {
         web_url
         withdrawn
       }
-      associated_taxons: links_of_type(type: "associated_taxons") {
-        ...Taxon
-      }
-      # TODO: implement taxons as a special type of field so they can be arbitrarily nested
-      # (or just work out the deepest point in the tree and use that?)
-      child_taxons: links_of_type(type: "parent_taxons", reverse: true) {
-        ...Taxon
-        links {
-          child_taxons: links_of_type(type: "parent_taxons", reverse: true) {
-            ...Taxon
-            links {
-              child_taxons: links_of_type(type: "parent_taxons", reverse: true) {
-                ...Taxon
-              }
-            }
-          }
-        }
-      }
       parent_taxons: links_of_type(type: "parent_taxons") {
-        ...Taxon
+        api_path
+        api_url
+        base_path
+        content_id
+        description
+        details {
+          internal_name
+          notes_for_editors
+          visible_to_departmental_editors
+        }
+        document_type
         links {
           parent_taxons: links_of_type(type: "parent_taxons") {
-            ...Taxon
-            links {
-              parent_taxons: links_of_type(type: "parent_taxons") {
-                ...Taxon
-              }
-              root_taxon: links_of_type(type: "root_taxon") {
-                ...Taxon
-              }
+            api_path
+            api_url
+            base_path
+            content_id
+            description
+            details {
+              internal_name
+              notes_for_editors
+              url_override
+              visible_to_departmental_editors
             }
-          }
-          root_taxon: links_of_type(type: "root_taxon") {
-            ...Taxon
+            document_type
+            locale
+            phase
+            public_updated_at
+            schema_name
+            title
+            web_url
+            withdrawn
           }
         }
-      }
-      root_taxon: links_of_type(type: "root_taxon") {
-        ...Taxon
+        locale
+        phase
+        public_updated_at
+        schema_name
+        title
+        web_url
+        withdrawn
       }
     }
     locale
@@ -92,7 +94,9 @@ query taxon($base_path: String!) {
     public_updated_at
     publishing_app
     publishing_request_id
+    publishing_scheduled_at
     rendering_app
+    scheduled_publishing_delay_seconds
     schema_name
     title
     updated_at
