@@ -25,6 +25,8 @@ module Types
     field :published_at, String, null: true
     field :publishing_api_first_published_at, String, null: true
     field :publishing_api_last_edited_at, String, null: true
+    field :publishing_scheduled_at, GraphQL::Types::ISO8601DateTime, null: true
+    field :scheduled_publishing_delay_seconds, Int, null: true
 
     field :details, Types::DetailsType, null: false
     def details = object[:details]
@@ -67,7 +69,14 @@ module Types
       }
     end
 
-  private
+    # Aliased by field methods for fields that are currently presented in the
+    # content item, but come from Content Store, so we can't provide them here
+    def not_stored_in_publishing_api = nil
+    alias_method :publishing_scheduled_at, :not_stored_in_publishing_api
+    alias_method :scheduled_publishing_delay_seconds, :not_stored_in_publishing_api
+
+
+    private
 
     def app_domain_external
       ENV.fetch("GOVUK_APP_DOMAIN_EXTERNAL", "publishing.service.gov.uk")

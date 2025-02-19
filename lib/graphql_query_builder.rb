@@ -3,12 +3,6 @@
 require "json"
 
 class GraphqlQueryBuilder
-  # FIELDS_TO_IGNORE is a bit of a "to do" list really. We should implement these:
-  FIELDS_TO_IGNORE = %w[
-    publishing_scheduled_at
-    scheduled_publishing_delay_seconds
-  ].freeze
-
   SPECIAL_LINK_TYPES = %w[
     available_translations
   ].freeze
@@ -60,7 +54,7 @@ private
           "}",
         ]
       in [ String => key, String | Numeric | true | false | nil ]
-        key unless FIELDS_TO_IGNORE.include?(key)
+        key
       end
     end
     fields.compact.join("\n#{' ' * indent}")
