@@ -43,7 +43,7 @@ module Types
     def api_path = "/api/content#{object[:base_path]}".chomp("/")
 
     field :api_url, String, null: false
-    def api_url = "https://govuk-graphql.#{app_domain_external}/api/content#{object[:base_path]}".chomp("/")
+    def api_url = "#{website_root}/api/content#{object[:base_path]}".chomp("/")
 
     field :web_url, String, null: false
     def web_url = "#{website_root}#{object[:base_path]}".chomp("/")

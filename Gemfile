@@ -5,9 +5,11 @@ gem "rails", "~> 8.0.1"
 gem "graphql", "~> 2.4"
 
 gem "bootsnap", require: false
+gem "gds-api-adapters", "~> 98.2"
 gem "gds-sso", "~> 19.1"
 gem "govspeak", "~> 10.0"
 gem "govuk_app_config", "~> 9.16"
+gem "hashdiff", "~> 1.1"
 gem "memo_wise", "~> 1.10"
 gem "pg", "~> 1.5"
 gem "sequel", "~> 5.89"
