@@ -75,8 +75,7 @@ module Types
     alias_method :publishing_scheduled_at, :not_stored_in_publishing_api
     alias_method :scheduled_publishing_delay_seconds, :not_stored_in_publishing_api
 
-
-    private
+  private
 
     def app_domain_external
       ENV.fetch("GOVUK_APP_DOMAIN_EXTERNAL", "publishing.service.gov.uk")
