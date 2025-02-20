@@ -14,20 +14,7 @@ module Types
     field :blocks, GraphQL::Types::JSON, null: true
 
     field :body, String, null: true
-    def body
-      body = object[:body]
-      return nil unless body
-      return body if body.is_a?(String)
-      raise "Unexpected body format: #{body.class}" unless body.is_a?(Array)
-
-      case body.map(&:deep_symbolize_keys)
-      in [*, { content_type: "text/html", content: String => body }, *]
-        body
-      in [*, { content_type: "text/govspeak", content: String => body }, *]
-        # TODO: - handle embedded content blocks
-        Govspeak::Document.new(body, { attachments: object[:attachments] }).to_html
-      end
-    end
+    def body = process_body(object[:body])
 
     field :born, GraphQL::Types::JSON, null: true
     field :brand, GraphQL::Types::JSON, null: true
@@ -180,6 +167,11 @@ module Types
     field :outcome_detail, GraphQL::Types::JSON, null: true
     field :outcome_documents, GraphQL::Types::JSON, null: true
     field :parts, GraphQL::Types::JSON, null: true
+    def parts
+      object[:parts]&.map do |part|
+        part.merge("body" => process_body(part["body"]))
+      end
+    end
     field :people_role_associations, GraphQL::Types::JSON, null: true
     field :person_appointment_order, GraphQL::Types::JSON, null: true
     field :phone_numbers, GraphQL::Types::JSON, null: true
@@ -251,5 +243,21 @@ module Types
     field :world_location_names, GraphQL::Types::JSON, null: true
     field :world_location_news_type, GraphQL::Types::JSON, null: true
     field :world_locations, GraphQL::Types::JSON, null: true
+
+  private
+
+    def process_body(body)
+      return nil unless body
+      return body if body.is_a?(String)
+      raise "Unexpected body format: #{body.class}" unless body.is_a?(Array)
+
+      case body.map(&:deep_symbolize_keys)
+      in [*, { content_type: "text/html", content: String => body }, *]
+        body
+      in [*, { content_type: "text/govspeak", content: String => body }, *]
+        # TODO: - handle embedded content blocks
+        Govspeak::Document.new(body, { attachments: object[:attachments] }).to_html
+      end
+    end
   end
 end
