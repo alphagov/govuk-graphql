@@ -25,6 +25,14 @@ query guide($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
+      embed: links_of_type(type: "embed") {
+        document_type
+        content_id
+        title
+        details {
+          json
+        }
+      }
       mainstream_browse_pages: links_of_type(type: "mainstream_browse_pages") {
         api_path
         api_url

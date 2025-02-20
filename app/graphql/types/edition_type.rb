@@ -31,10 +31,7 @@ module Types
     field :details, Types::DetailsType, null: false
     def details = object[:details]
                     &.symbolize_keys
-                    &.merge(
-                      document_id: object[:document_id],
-                      user_facing_version: object[:user_facing_version],
-                    )
+                    &.merge(parent: object)
 
     field :routes, GraphQL::Types::JSON, null: true
     field :redirects, GraphQL::Types::JSON, null: true
