@@ -1,5 +1,5 @@
-query step_by_step_nav($base_path: String!) {
-  edition(base_path: $base_path) {
+query step_by_step_nav($base_path: String!, $locale: String!) {
+  edition(base_path: $base_path, locale: $locale) {
     analytics_identifier
     base_path
     content_id

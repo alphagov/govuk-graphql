@@ -17,7 +17,8 @@ class GraphqlController < ApplicationController
     result = GovukGraphqlSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
 
     schema_name = result.dig("data", "edition", "schema_name")
-    set_prometheus_labels(schema_name) if schema_name.present?
+    locale = result.dig("data", "edition", "locale")
+    set_prometheus_labels(schema_name:, locale:) if schema_name.present? || locale.present?
 
     render json: result
   rescue StandardError => e

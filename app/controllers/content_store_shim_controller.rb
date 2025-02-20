@@ -5,7 +5,10 @@ class ContentStoreShimController < ApplicationController
 
   def content_item
     base_path = "/#{params[:base_path]}"
-    edition = Sequel::Model.db[:editions].where(base_path:, state: "published").first
+    edition = Sequel::Model.db[:editions]
+                           .join(:documents, id: :document_id)
+                           .where(base_path:, state: "published")
+                           .first
     if edition.nil?
       render json: { error: "Not found" }, status: :not_found
     else
@@ -44,11 +47,12 @@ private
   def get_graphql_content_item(edition, base_path)
     # Find the appropriate graphql query for this schema
     schema_name = edition.fetch(:schema_name)
-    set_prometheus_labels(schema_name)
+    locale = edition.fetch(:locale)
+    set_prometheus_labels(schema_name:, locale:)
     File.open(Rails.root.join("app/graphql/queries/#{schema_name}.graphql"), "r") do |file|
       query = file.read
       # Execute the query
-      result = GovukGraphqlSchema.execute(query, variables: { base_path: base_path })
+      result = GovukGraphqlSchema.execute(query, variables: { base_path:, locale: })
       result.dig("data", "edition")
     end
   end
