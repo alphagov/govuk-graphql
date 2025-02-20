@@ -245,9 +245,11 @@ type Edition {
   publishing_api_last_edited_at: String
   publishing_app: String!
   publishing_request_id: String
+  publishing_scheduled_at: String
   redirects: JSON
   rendering_app: String!
   routes: JSON
+  scheduled_publishing_delay_seconds: String
   schema_name: String!
   state: String!
   title: String!
