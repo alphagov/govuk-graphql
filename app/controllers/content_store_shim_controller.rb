@@ -20,9 +20,17 @@ class ContentStoreShimController < ApplicationController
     if edition.nil?
       render json: { error: "Not found" }, status: :not_found
     else
-      graphql_content_item = get_graphql_content_item(edition, base_path)
-      content_store_content_item = GdsApi.content_store.content_item(base_path).to_h
-      diff = Hashdiff.diff(content_store_content_item, graphql_content_item)
+      graphql_content_item = sort_links(get_graphql_content_item(edition, base_path))
+      content_store_content_item = sort_links(GdsApi.content_store.content_item(base_path).to_h)
+      diff = Hashdiff.diff(
+        content_store_content_item,
+        graphql_content_item,
+        similarity: 0.5,
+        ignore_keys: %w[public_updated_at],
+      ) do |_path, left, right|
+        # If both sides are blank, consider them equal (even though they might be null, "" or {} etc.)
+        true if left.blank? && right.blank?
+      end
       render json: {
         diff:,
         graphql_content_item:,
@@ -43,5 +51,19 @@ private
       result = GovukGraphqlSchema.execute(query, variables: { base_path: base_path })
       result.dig("data", "edition")
     end
+  end
+
+  def sort_links(input)
+    return unless input.is_a?(Hash)
+
+    links = input["links"]
+    return unless links.is_a?(Hash)
+
+    links.each_value do |arr|
+      arr&.each { sort_links(it) }
+      arr&.sort_by! { it["base_path"] }
+    end
+
+    input
   end
 end

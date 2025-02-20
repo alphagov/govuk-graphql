@@ -124,7 +124,7 @@ class ExpandedEditionDataset
       .select_append(
         Sequel.function(:row_number)
               .over(
-                partition: %i[path content_id],
+                partition: %i[id_path path content_id],
                 order: [locale_ordering, state_ordering, :type],
               ).as(:row_number),
       )
