@@ -13,8 +13,9 @@ TODO list
 - [x] Implement available_translations
 - [x] Implement change history
 - [x] Implement a content-store shim
-- [ ] Implement a compare-with-content-store endpoint using hashdiff
+- [x] Implement a compare-with-content-store endpoint using hashdiff
 - [ ] Implement embedded editions
+- [ ] Come up with a nicer way to handle taxons
 - [ ] Refactor to use database views to simplify recursive CTE
 - [ ] Refactor so the code is vaguely understandable and maintainable
 
