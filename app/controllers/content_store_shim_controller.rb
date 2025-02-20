@@ -61,7 +61,7 @@ private
 
     links.each_value do |arr|
       arr&.each { sort_links(it) }
-      arr&.sort_by! { it["base_path"] }
+      arr&.sort_by! { it["base_path"] || it["content_id"] }
     end
 
     input
