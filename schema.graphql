@@ -89,6 +89,7 @@ type Details {
   international_delegations: JSON
   introduction: JSON
   introductory_paragraph: JSON
+  json: JSON!
   key: JSON
   label: JSON
   label_text: JSON
@@ -226,40 +227,45 @@ type Edition {
   base_path: String
   content_id: String!
   content_store: String!
-  created_at: String!
+  created_at: ISO8601DateTime!
   description: String
   details: Details!
   document_id: Int!
   document_type: String!
-  first_published_at: String
+  first_published_at: ISO8601DateTime
   id: Int!
-  last_edited_at: String
+  last_edited_at: ISO8601DateTime
   last_edited_by_editor_id: String
   links: Links
   locale: String!
-  major_published_at: String
+  major_published_at: ISO8601DateTime
   phase: String
-  public_updated_at: String!
-  published_at: String
-  publishing_api_first_published_at: String
-  publishing_api_last_edited_at: String
+  public_updated_at: ISO8601DateTime!
+  published_at: ISO8601DateTime
+  publishing_api_first_published_at: ISO8601DateTime
+  publishing_api_last_edited_at: ISO8601DateTime
   publishing_app: String!
   publishing_request_id: String
-  publishing_scheduled_at: String
+  publishing_scheduled_at: ISO8601DateTime
   redirects: JSON
   rendering_app: String!
   routes: JSON
-  scheduled_publishing_delay_seconds: String
+  scheduled_publishing_delay_seconds: Int
   schema_name: String!
   state: String!
   title: String!
   update_type: String
-  updated_at: String!
-  user_facing_version: String
+  updated_at: ISO8601DateTime!
+  user_facing_version: Int
   web_url: String!
   withdrawn: Boolean!
   withdrawn_notice: JSON!
 }
+
+"""
+An ISO 8601-encoded datetime
+"""
+scalar ISO8601DateTime @specifiedBy(url: "https://tools.ietf.org/html/rfc3339")
 
 """
 Represents untyped JSON

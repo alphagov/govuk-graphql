@@ -31,10 +31,16 @@ module Types
       change_notes = Sequel[:change_notes]
       editions = Sequel[:editions]
 
+      parent = object[:parent]
+      return nil if parent.nil?
+
+      document_id, user_facing_version = parent.values_at(:document_id, :user_facing_version)
+      return nil if document_id.nil? || user_facing_version.nil?
+
       Sequel::Model.db[change_notes]
         .join(editions, id: change_notes[:edition_id])
-        .where(editions[:document_id] => object[:document_id])
-        .where(Sequel[:user_facing_version] => ..object[:user_facing_version])
+        .where(editions[:document_id] => document_id)
+        .where(Sequel[:user_facing_version] => ..user_facing_version)
         .where { change_notes[:public_timestamp] !~ nil }
         .order(change_notes[:public_timestamp])
         .select(:note, :public_timestamp)
@@ -244,6 +250,9 @@ module Types
     field :world_location_news_type, GraphQL::Types::JSON, null: true
     field :world_locations, GraphQL::Types::JSON, null: true
 
+    field :json, GraphQL::Types::JSON, null: false
+    def json = object
+
   private
 
     def process_body(body)
@@ -251,13 +260,34 @@ module Types
       return body if body.is_a?(String)
       raise "Unexpected body format: #{body.class}" unless body.is_a?(Array)
 
-      case body.map(&:deep_symbolize_keys)
-      in [*, { content_type: "text/html", content: String => body }, *]
-        body
-      in [*, { content_type: "text/govspeak", content: String => body }, *]
-        # TODO: - handle embedded content blocks
-        Govspeak::Document.new(body, { attachments: object[:attachments] }).to_html
+      html = case body.map(&:deep_symbolize_keys)
+             in [*, { content_type: "text/html", content: String => body }, *]
+               body
+             in [*, { content_type: "text/govspeak", content: String => body }, *]
+               Govspeak::Document.new(body, { attachments: object[:attachments] }).to_html
+             end
+
+      embeds = object.dig(:parent, :links, "embed")
+      return html if embeds.blank?
+
+      references = ContentBlockTools::ContentBlockReference.find_all_in_document(html)
+      references.uniq.each do |ref|
+        embed_code = ref.embed_code
+        embed = embeds.find { it[:content_id] == ref.content_id }
+        next if embed.nil?
+
+        Rails.logger.info("Rendering embed #{embed}")
+        content_block = ContentBlockTools::ContentBlock.new(
+          document_type: embed[:document_type],
+          content_id: embed[:content_id],
+          title: embed[:title],
+          details: embed[:details],
+          embed_code: embed_code,
+        )
+
+        html.gsub!(embed_code, content_block.render)
       end
+      html
     end
   end
 end
