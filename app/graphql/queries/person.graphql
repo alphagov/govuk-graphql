@@ -1,5 +1,5 @@
-query person($base_path: String!) {
-  edition(base_path: $base_path) {
+query person($base_path: String!, $locale: String!) {
+  edition(base_path: $base_path, locale: $locale) {
     analytics_identifier
     base_path
     content_id

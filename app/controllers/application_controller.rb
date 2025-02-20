@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  def set_prometheus_labels(schema_name)
+  def set_prometheus_labels(schema_name:, locale:)
     prometheus_labels = request.env.fetch("govuk.prometheus_labels", {})
-    request.env["govuk.prometheus_labels"] = prometheus_labels.merge(schema_name: schema_name)
+    request.env["govuk.prometheus_labels"] = prometheus_labels.merge(schema_name:, locale:)
   end
 end

@@ -26,8 +26,8 @@ class GraphqlQueryBuilder
 
   def build_query
     <<~GRAPHQL
-      query #{@data['schema_name']}($base_path: String!) {
-        edition(base_path: $base_path) {
+      query #{@data['schema_name']}($base_path: String!, $locale: String!) {
+        edition(base_path: $base_path, locale: $locale) {
           #{build_fields(@data)}
         }
       }
