@@ -1,0 +1,34 @@
+<%= render "fragments/available_translations" %>
+<%= render "fragments/level_one_taxons" %>
+<%= render "fragments/organisations" %>
+<%= render "fragments/popular_links" %>
+<%= render "fragments/primary_publishing_organisation" %>
+
+query homepage($base_path: String!, $locale: String!) {
+  edition(base_path: $base_path, locale: $locale) {
+    analytics_identifier
+    base_path
+    content_id
+    description
+    document_type
+    first_published_at
+    links {
+      ...AvailableTranslations
+      ...LevelOneTaxons
+      ...Organisations
+      ...PopularLinks
+      ...PrimaryPublishingOrganisation
+    }
+    locale
+    phase
+    public_updated_at
+    publishing_app
+    publishing_request_id
+    publishing_scheduled_at
+    rendering_app
+    scheduled_publishing_delay_seconds
+    schema_name
+    title
+    updated_at
+  }
+}
