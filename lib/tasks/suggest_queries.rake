@@ -256,18 +256,25 @@ task suggest_queries: :environment do
   csv = CSV.parse(csv_data)
   query = <<~GRAPHQL
     query suggest($base_path: String!) {
-      suggest_query(base_path: $base_path)
+      suggest_query(base_path: $base_path, use_fragments: true)
     }
   GRAPHQL
   csv.group_by { |row| row[0] }.each_value do |rows|
     schema_name, base_path, = rows.first
     begin
       result = GovukGraphqlSchema.execute(query, variables: { base_path: base_path })
-      File.open(Rails.root.join("app/graphql/queries/#{schema_name}.graphql"), "w") do |file|
-        file.write(result.to_h.dig("data", "suggest_query"))
+      File.open(Rails.root.join("app/graphql/queries/#{schema_name}.graphql.erb"), "w") do |file|
+        file.write <<~ERB
+          <%#
+          Examples:
+          - #{rows.map { |_, bp,| "https://www.gov.uk#{bp}" }.join("\n- ")}
+          %>
+
+          #{result.to_h.dig("data", "suggest_query")}
+        ERB
       end
-    rescue StandardError
-      puts "Failed to suggest query for #{schema_name} with base_path #{base_path}"
+    rescue StandardError => e
+      puts "Failed to suggest query for #{schema_name} with base_path #{base_path} - #{e}"
     end
   end
 end

@@ -1,9 +1,20 @@
+<%#
+Examples:
+- https://www.gov.uk/employment-tribunal-decisions/miss-m-perkins-v-extran-medica-ltd-3332499-2018
+- https://www.gov.uk/residential-property-tribunal-decisions/vogans-mill-17-mill-street-london-se1-2bz-lon-00be-ldc-2019-0058
+- https://www.gov.uk/employment-tribunal-decisions/mr-i-ghezali-v-cup-glasgow-ltd-4122849-2018
+- https://www.gov.uk/research-for-development-outputs/consensus-for-a-holistic-approach-to-improve-rural-livelihoods-in-riverine-islands-of-bangladesh-scientific-report
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/organisations" %>
+<%= render "fragments/primary_publishing_organisation" %>
+<%= render "fragments/taxons" %>
+
 query specialist_document($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       attachments
       body
@@ -12,22 +23,8 @@ query specialist_document($base_path: String!, $locale: String!) {
       metadata
       temporary_update_type
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
       finder: links_of_type(type: "finder") {
         api_path
         api_url
@@ -44,113 +41,9 @@ query specialist_document($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      organisations: links_of_type(type: "organisations") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      taxons: links_of_type(type: "taxons") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          internal_name
-          notes_for_editors
-          visible_to_departmental_editors
-        }
-        document_type
-        links {
-          parent_taxons: links_of_type(type: "parent_taxons") {
-            api_path
-            api_url
-            base_path
-            content_id
-            description
-            details {
-              internal_name
-              notes_for_editors
-              visible_to_departmental_editors
-            }
-            document_type
-            links {
-              root_taxon: links_of_type(type: "root_taxon") {
-                api_path
-                api_url
-                base_path
-                content_id
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            phase
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        phase
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...Organisations
+      ...PrimaryPublishingOrganisation
+      ...Taxons
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

@@ -1,17 +1,26 @@
+<%#
+Examples:
+- https://www.gov.uk/browse/childcare-parenting/fostering-adoption-surrogacy
+- https://www.gov.uk/browse/business/setting-up
+- https://www.gov.uk/browse/working/finding-job
+- https://www.gov.uk/browse/employing-people/contracts
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/children" %>
+<%= render "fragments/parents" %>
+<%= render "fragments/primary_publishing_organisation" %>
+
 query mainstream_browse_page($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       groups
       internal_name
       ordered_second_level_browse_pages
       second_level_ordering
     }
-    document_type
-    first_published_at
     links {
       active_top_level_browse_page: links_of_type(type: "active_top_level_browse_page") {
         api_path
@@ -27,82 +36,10 @@ query mainstream_browse_page($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      children: links_of_type(type: "parent", reverse: true) {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        links {
-          parent: links_of_type(type: "parent") {
-            api_path
-            api_url
-            base_path
-            content_id
-            description
-            document_type
-            locale
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      parent: links_of_type(type: "parent") {
-        api_path
-        api_url
-        base_path
-        content_id
-        description
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
+      ...Children
+      ...Parents
+      ...PrimaryPublishingOrganisation
       second_level_browse_pages: links_of_type(type: "second_level_browse_pages") {
         api_path
         api_url
@@ -132,16 +69,5 @@ query mainstream_browse_page($base_path: String!, $locale: String!) {
         withdrawn
       }
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

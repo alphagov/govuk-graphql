@@ -1,9 +1,21 @@
+<%#
+Examples:
+- https://www.gov.uk/guidance/childminders-and-childcare-providers-register-with-ofsted
+- https://www.gov.uk/guidance/the-trader-s-guide-to-importing-and-exporting-certain-agricultural-goods
+- https://www.gov.uk/guidance/chemical-waste-appropriate-measures-for-permitted-facilities
+- https://www.gov.uk/guidance/land-compensation-manual-section-17-references-to-the-upper-tribunal-land-chamber
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/document_collections" %>
+<%= render "fragments/organisations" %>
+<%= render "fragments/primary_publishing_organisation" %>
+<%= render "fragments/suggested_ordered_related_items" %>
+
 query manual($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       body
       change_history
@@ -11,90 +23,11 @@ query manual($base_path: String!, $locale: String!) {
       child_section_groups
       organisations
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      document_collections: links_of_type(type: "documents", reverse: true) {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        links {
-          documents: links_of_type(type: "documents") {
-            api_path
-            api_url
-            base_path
-            content_id
-            document_type
-            locale
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      organisations: links_of_type(type: "organisations") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
+      ...DocumentCollections
+      ...Organisations
+      ...PrimaryPublishingOrganisation
       sections: links_of_type(type: "sections") {
         api_path
         api_url
@@ -108,30 +41,7 @@ query manual($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      suggested_ordered_related_items: links_of_type(type: "suggested_ordered_related_items") {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...SuggestedOrderedRelatedItems
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

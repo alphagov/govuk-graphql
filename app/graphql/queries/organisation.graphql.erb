@@ -1,9 +1,19 @@
+<%#
+Examples:
+- https://www.gov.uk/government/organisations/high-speed-two-limited
+- https://www.gov.uk/government/organisations/office-of-the-first-minister-and-deputy-first-minister
+- https://www.gov.uk/government/organisations/scotland-office
+- https://www.gov.uk/government/organisations/defence-analytical-services-agency
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/ordered_parent_organisations" %>
+<%= render "fragments/primary_publishing_organisation" %>
+
 query organisation($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       acronym
       alternative_format_contact_email
@@ -23,23 +33,8 @@ query organisation($base_path: String!, $locale: String!) {
       secondary_corporate_information_pages
       social_media_links
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
       ordered_board_members: links_of_type(type: "ordered_board_members") {
         api_path
         api_url
@@ -51,36 +46,7 @@ query organisation($base_path: String!, $locale: String!) {
         }
         document_type
         links {
-          role_appointments: links_of_type(type: "TODO - can be person or role, depending on the expected type of its parent", reverse: true) {
-            content_id
-            details {
-              current
-              ended_on
-              person_appointment_order
-              started_on
-            }
-            document_type
-            links {
-              role: links_of_type(type: "role") {
-                content_id
-                details {
-                  body
-                  role_payment_type
-                }
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                withdrawn
-              }
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            withdrawn
-          }
+          ...RoleAppointments
         }
         locale
         public_updated_at
@@ -123,26 +89,7 @@ query organisation($base_path: String!, $locale: String!) {
         title
         withdrawn
       }
-      ordered_parent_organisations: links_of_type(type: "ordered_parent_organisations") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...OrderedParentOrganisations
       ordered_roles: links_of_type(type: "ordered_roles") {
         content_id
         details {
@@ -156,37 +103,7 @@ query organisation($base_path: String!, $locale: String!) {
         title
         withdrawn
       }
-      primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...PrimaryPublishingOrganisation
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

@@ -7,6 +7,36 @@ class GraphqlQueryBuilder
     available_translations
   ].freeze
 
+  FRAGMENTS = Dir.glob(Rails.root.join("app/graphql/queries/fragments/_*.graphql.erb"))
+                 .map { |file| file.match(/fragments\/_(.*)\.graphql\.erb\Z/)[1] }
+                 .to_set
+                 .freeze
+
+  FRAGMENT_NAME_OVERRIDES = (Hash.new { |_, key| key }).merge(
+    "parent" => "parents",
+  ).freeze
+
+
+  DEFAULT_TOP_LEVEL_FIELDS = %w[
+    analytics_identifier
+    base_path
+    content_id
+    description
+    document_type
+    first_published_at
+    locale
+    phase
+    public_updated_at
+    publishing_app
+    publishing_request_id
+    publishing_scheduled_at
+    rendering_app
+    scheduled_publishing_delay_seconds
+    schema_name
+    title
+    updated_at
+  ].freeze
+
   REVERSE_LINK_TYPES = {
     "children" => "parent",
     "document_collections" => "documents",
@@ -20,18 +50,34 @@ class GraphqlQueryBuilder
     "ministers" => "ministerial",
   }.freeze
 
-  def initialize(old_response)
+  def initialize(old_response, use_fragments)
     @data = old_response
+    @use_fragments = use_fragments
   end
 
   def build_query
-    <<~GRAPHQL
-      query #{@data['schema_name']}($base_path: String!, $locale: String!) {
-        edition(base_path: $base_path, locale: $locale) {
-          #{build_fields(@data)}
-        }
-      }
-    GRAPHQL
+    parts = if @use_fragments
+              [
+                "<%= render \"fragments/default_top_level_fields\" %>",
+                (@data["links"]&.keys&.map { FRAGMENT_NAME_OVERRIDES[it] }&.to_set & FRAGMENTS)&.sort&.map { |link_key| "<%= render \"fragments/#{link_key}\" %>" },
+                "",
+                "query #{@data['schema_name']}($base_path: String!, $locale: String!) {",
+                "  edition(base_path: $base_path, locale: $locale) {",
+                "    ...DefaultTopLevelFields",
+                "    #{build_fields(@data.except(*DEFAULT_TOP_LEVEL_FIELDS))}",
+                "  }",
+                "}",
+              ]
+            else
+              [
+                "query #{@data['schema_name']}($base_path: String!, $locale: String!) {",
+                "edition(base_path: $base_path, locale: $locale) {",
+                "  #{build_fields(@data)}",
+                "  }",
+                "}",
+              ]
+            end
+    parts.join("\n")
   end
 
 private
@@ -61,6 +107,9 @@ private
   end
 
   def build_links_query(key, array, indent)
+    fragment_name = FRAGMENT_NAME_OVERRIDES[key]
+    return "...#{fragment_name.camelize}" if @use_fragments && FRAGMENTS.include?(fragment_name)
+
     link_type = REVERSE_LINK_TYPES[key] || key
     reverse = REVERSE_LINK_TYPES.key?(key)
 

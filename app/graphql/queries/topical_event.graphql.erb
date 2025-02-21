@@ -1,9 +1,17 @@
+<%#
+Examples:
+- https://www.gov.uk/government/topical-events/vjday70
+- https://www.gov.uk/government/topical-events/budget-2015
+- https://www.gov.uk/government/topical-events/open-government-partnership-summit-2013
+- https://www.gov.uk/government/topical-events/nato-summit-wales-cymru-2014
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+
 query topical_event($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       body
       emphasised_organisations
@@ -12,33 +20,8 @@ query topical_event($base_path: String!, $locale: String!) {
       social_media_links
       start_date
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

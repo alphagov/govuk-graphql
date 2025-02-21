@@ -1,28 +1,20 @@
+<%#
+Examples:
+- https://www.gov.uk/government/ministers
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/suggested_ordered_related_items" %>
+
 query ministers_index($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       body
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
       ordered_also_attends_cabinet: links_of_type(type: "ordered_also_attends_cabinet") {
         api_path
         api_url
@@ -34,42 +26,7 @@ query ministers_index($base_path: String!, $locale: String!) {
         }
         document_type
         links {
-          role_appointments: links_of_type(type: "TODO - can be person or role, depending on the expected type of its parent", reverse: true) {
-            content_id
-            details {
-              current
-              ended_on
-              person_appointment_order
-              started_on
-            }
-            document_type
-            links {
-              role: links_of_type(type: "role") {
-                api_path
-                api_url
-                base_path
-                content_id
-                details {
-                  body
-                  role_payment_type
-                  seniority
-                  whip_organisation
-                }
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            withdrawn
-          }
+          ...RoleAppointments
         }
         locale
         public_updated_at
@@ -89,42 +46,7 @@ query ministers_index($base_path: String!, $locale: String!) {
         }
         document_type
         links {
-          role_appointments: links_of_type(type: "TODO - can be person or role, depending on the expected type of its parent", reverse: true) {
-            content_id
-            details {
-              current
-              ended_on
-              person_appointment_order
-              started_on
-            }
-            document_type
-            links {
-              role: links_of_type(type: "role") {
-                api_path
-                api_url
-                base_path
-                content_id
-                details {
-                  body
-                  role_payment_type
-                  seniority
-                  whip_organisation
-                }
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            withdrawn
-          }
+          ...RoleAppointments
         }
         locale
         public_updated_at
@@ -144,42 +66,7 @@ query ministers_index($base_path: String!, $locale: String!) {
         }
         document_type
         links {
-          role_appointments: links_of_type(type: "TODO - can be person or role, depending on the expected type of its parent", reverse: true) {
-            content_id
-            details {
-              current
-              ended_on
-              person_appointment_order
-              started_on
-            }
-            document_type
-            links {
-              role: links_of_type(type: "role") {
-                api_path
-                api_url
-                base_path
-                content_id
-                details {
-                  body
-                  role_payment_type
-                  seniority
-                  whip_organisation
-                }
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            withdrawn
-          }
+          ...RoleAppointments
         }
         locale
         public_updated_at
@@ -199,42 +86,7 @@ query ministers_index($base_path: String!, $locale: String!) {
         }
         document_type
         links {
-          role_appointments: links_of_type(type: "TODO - can be person or role, depending on the expected type of its parent", reverse: true) {
-            content_id
-            details {
-              current
-              ended_on
-              person_appointment_order
-              started_on
-            }
-            document_type
-            links {
-              role: links_of_type(type: "role") {
-                api_path
-                api_url
-                base_path
-                content_id
-                details {
-                  body
-                  role_payment_type
-                  seniority
-                  whip_organisation
-                }
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            withdrawn
-          }
+          ...RoleAppointments
         }
         locale
         public_updated_at
@@ -254,42 +106,7 @@ query ministers_index($base_path: String!, $locale: String!) {
         }
         document_type
         links {
-          role_appointments: links_of_type(type: "TODO - can be person or role, depending on the expected type of its parent", reverse: true) {
-            content_id
-            details {
-              current
-              ended_on
-              person_appointment_order
-              started_on
-            }
-            document_type
-            links {
-              role: links_of_type(type: "role") {
-                api_path
-                api_url
-                base_path
-                content_id
-                details {
-                  body
-                  role_payment_type
-                  seniority
-                  whip_organisation
-                }
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            withdrawn
-          }
+          ...RoleAppointments
         }
         locale
         public_updated_at
@@ -309,42 +126,7 @@ query ministers_index($base_path: String!, $locale: String!) {
         }
         document_type
         links {
-          role_appointments: links_of_type(type: "TODO - can be person or role, depending on the expected type of its parent", reverse: true) {
-            content_id
-            details {
-              current
-              ended_on
-              person_appointment_order
-              started_on
-            }
-            document_type
-            links {
-              role: links_of_type(type: "role") {
-                api_path
-                api_url
-                base_path
-                content_id
-                details {
-                  body
-                  role_payment_type
-                  seniority
-                  whip_organisation
-                }
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            withdrawn
-          }
+          ...RoleAppointments
         }
         locale
         public_updated_at
@@ -364,42 +146,7 @@ query ministers_index($base_path: String!, $locale: String!) {
         }
         document_type
         links {
-          role_appointments: links_of_type(type: "TODO - can be person or role, depending on the expected type of its parent", reverse: true) {
-            content_id
-            details {
-              current
-              ended_on
-              person_appointment_order
-              started_on
-            }
-            document_type
-            links {
-              role: links_of_type(type: "role") {
-                api_path
-                api_url
-                base_path
-                content_id
-                details {
-                  body
-                  role_payment_type
-                  seniority
-                  whip_organisation
-                }
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            withdrawn
-          }
+          ...RoleAppointments
         }
         locale
         public_updated_at
@@ -434,42 +181,7 @@ query ministers_index($base_path: String!, $locale: String!) {
             }
             document_type
             links {
-              role_appointments: links_of_type(type: "TODO - can be person or role, depending on the expected type of its parent", reverse: true) {
-                content_id
-                details {
-                  current
-                  ended_on
-                  person_appointment_order
-                  started_on
-                }
-                document_type
-                links {
-                  role: links_of_type(type: "role") {
-                    api_path
-                    api_url
-                    base_path
-                    content_id
-                    details {
-                      body
-                      role_payment_type
-                      seniority
-                      whip_organisation
-                    }
-                    document_type
-                    locale
-                    public_updated_at
-                    schema_name
-                    title
-                    web_url
-                    withdrawn
-                  }
-                }
-                locale
-                public_updated_at
-                schema_name
-                title
-                withdrawn
-              }
+              ...RoleAppointments
             }
             locale
             public_updated_at
@@ -504,30 +216,7 @@ query ministers_index($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      suggested_ordered_related_items: links_of_type(type: "suggested_ordered_related_items") {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...SuggestedOrderedRelatedItems
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

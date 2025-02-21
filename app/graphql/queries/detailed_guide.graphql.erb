@@ -1,9 +1,24 @@
+<%#
+Examples:
+- https://www.gov.uk/guidance/eu-guidance-documents-referred-to-in-the-human-medicines-regulations-2012
+- https://www.gov.uk/guidance/tell-ofsted-you-want-to-contract-as-an-inspector
+- https://www.gov.uk/guidance/2023-rights-of-way-order-information-start-date-notices-inquiry-hearing-notices-and-rejection-letters
+- https://www.gov.uk/guidance/early-years-foundation-stage-exemplification-materials
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/document_collections" %>
+<%= render "fragments/government" %>
+<%= render "fragments/organisations" %>
+<%= render "fragments/original_primary_publishing_organisation" %>
+<%= render "fragments/primary_publishing_organisation" %>
+<%= render "fragments/suggested_ordered_related_items" %>
+<%= render "fragments/taxons" %>
+
 query detailed_guide($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       attachments
       body
@@ -14,206 +29,15 @@ query detailed_guide($base_path: String!, $locale: String!) {
       related_mainstream_content
       tags
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      document_collections: links_of_type(type: "documents", reverse: true) {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        links {
-          documents: links_of_type(type: "documents") {
-            api_path
-            api_url
-            base_path
-            content_id
-            document_type
-            locale
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      government: links_of_type(type: "government") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          current
-          ended_on
-          started_on
-        }
-        document_type
-        locale
-        title
-        web_url
-      }
-      organisations: links_of_type(type: "organisations") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      original_primary_publishing_organisation: links_of_type(type: "original_primary_publishing_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      suggested_ordered_related_items: links_of_type(type: "suggested_ordered_related_items") {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      taxons: links_of_type(type: "taxons") {
-        api_path
-        api_url
-        base_path
-        content_id
-        description
-        details {
-          internal_name
-          notes_for_editors
-          visible_to_departmental_editors
-        }
-        document_type
-        links {
-          parent_taxons: links_of_type(type: "parent_taxons") {
-            api_path
-            api_url
-            base_path
-            content_id
-            description
-            details {
-              internal_name
-              notes_for_editors
-              visible_to_departmental_editors
-            }
-            document_type
-            links {
-              root_taxon: links_of_type(type: "root_taxon") {
-                api_path
-                api_url
-                base_path
-                content_id
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            phase
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        phase
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
+      ...DocumentCollections
+      ...Government
+      ...Organisations
+      ...OriginalPrimaryPublishingOrganisation
+      ...PrimaryPublishingOrganisation
+      ...SuggestedOrderedRelatedItems
+      ...Taxons
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

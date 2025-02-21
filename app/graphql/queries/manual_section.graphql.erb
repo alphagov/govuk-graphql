@@ -1,9 +1,19 @@
+<%#
+Examples:
+- https://www.gov.uk/guidance/rating-manual-section-6-part-3-valuation-of-all-property-classes/section-640-marinas
+- https://www.gov.uk/guidance/qualifications-funding-approval-manual-2025-to-2026/scope-of-this-qualification-funding-approval-manual
+- https://www.gov.uk/guidance/vat-tertiary-legislation/northern-ireland
+- https://www.gov.uk/guidance/rating-manual-section-6-chhallenges-to-the-rating-list/part-4-pre-cca-england-and-wales
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/organisations" %>
+<%= render "fragments/primary_publishing_organisation" %>
+
 query manual_section($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       attachments
       body
@@ -12,22 +22,8 @@ query manual_section($base_path: String!, $locale: String!) {
       organisations
       visually_expanded
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
       manual: links_of_type(type: "manual") {
         api_path
         api_url
@@ -41,57 +37,8 @@ query manual_section($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      organisations: links_of_type(type: "organisations") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...Organisations
+      ...PrimaryPublishingOrganisation
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }
