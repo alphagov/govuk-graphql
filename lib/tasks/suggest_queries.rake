@@ -108,7 +108,6 @@ task suggest_queries: :environment do
     hmrc_manual_section,/hmrc-internal-manuals/corporate-intangibles-research-and-development-manual/cird10120,4
     homepage,/,1
     how_government_works,/government/how-government-works,1
-    html_publication,/government/publications/monkeypox-outbreak-epidemiological-overview/monkeypox-outbreak-epidemiological-overview-29-july-2022,1
     html_publication,/government/publications/procurement-at-fcdo-procurement-act-2023/procurement-at-fcdo-procurement-act-2023,2
     html_publication,/government/publications/g7-foreign-and-development-ministers-meeting-11-12-december-2021-chairs-statements/63482227-af78-45fc-9b4e-a16a4fb88d72,3
     html_publication,/government/publications/2010-to-2015-government-policy-deficit-reduction/2010-to-2015-government-policy-deficit-reduction,4
