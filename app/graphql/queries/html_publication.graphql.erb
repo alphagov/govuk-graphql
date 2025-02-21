@@ -1,0 +1,32 @@
+<%#
+Examples:
+- https://www.gov.uk/government/publications/procurement-at-fcdo-procurement-act-2023/procurement-at-fcdo-procurement-act-2023
+- https://www.gov.uk/government/publications/g7-foreign-and-development-ministers-meeting-11-12-december-2021-chairs-statements/63482227-af78-45fc-9b4e-a16a4fb88d72
+- https://www.gov.uk/government/publications/2010-to-2015-government-policy-deficit-reduction/2010-to-2015-government-policy-deficit-reduction
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/government" %>
+<%= render "fragments/organisations" %>
+<%= render "fragments/parents" %>
+<%= render "fragments/primary_publishing_organisation" %>
+
+query html_publication($base_path: String!, $locale: String!) {
+  edition(base_path: $base_path, locale: $locale) {
+    ...DefaultTopLevelFields
+    details {
+      body
+      first_published_version
+      political
+      public_timestamp
+    }
+    links {
+      ...AvailableTranslations
+      ...Government
+      ...Organisations
+      ...Parents
+      ...PrimaryPublishingOrganisation
+    }
+  }
+}
