@@ -6,10 +6,7 @@ class ContentStoreShimController < ApplicationController
 
   def content_item
     base_path = "/#{params[:base_path]}"
-    edition = Sequel::Model.db[:editions]
-                           .join(:documents, id: :document_id)
-                           .where(base_path:, state: "published")
-                           .first
+    edition = get_edition(base_path)
     if edition.nil?
       render json: { error: "Not found" }, status: :not_found
     else
@@ -19,8 +16,7 @@ class ContentStoreShimController < ApplicationController
 
   def compare_content_item
     base_path = "/#{params[:base_path]}"
-    edition = Sequel::Model.db[:editions].where(base_path:, state: "published").first
-
+    edition = get_edition(base_path)
     if edition.nil?
       render json: { error: "Not found" }, status: :not_found
     else
@@ -44,6 +40,13 @@ class ContentStoreShimController < ApplicationController
   end
 
 private
+
+  def get_edition(base_path)
+    Sequel::Model.db[:editions]
+                 .join(:documents, id: :document_id)
+                 .where(base_path:, state: "published")
+                 .first
+  end
 
   def get_graphql_content_item(edition, base_path)
     schema_name = edition.fetch(:schema_name)
