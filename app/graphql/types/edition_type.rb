@@ -41,10 +41,10 @@ module Types
     field :api_path, String, null: false
     def api_path = "/api/content#{object[:base_path]}"
 
-    field :api_url, String, null: false
+    field :api_url, String, null: false, deprecation_reason: "Use `api_path` instead"
     def api_url = "#{website_root}/api/content#{object[:base_path]}"
 
-    field :web_url, String, null: false
+    field :web_url, String, null: false, deprecation_reason: "Use `base_path` instead"
     def web_url = "#{website_root}#{object[:base_path]}"
 
     field :links, LinksType
