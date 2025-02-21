@@ -14,6 +14,8 @@ class GraphqlQueryBuilder
 
   FRAGMENT_NAME_OVERRIDES = (Hash.new { |_, key| key }).merge(
     "parent" => "parents",
+    "parent_taxons" => "parent_and_root_taxons",
+    "root_taxon" => "parent_and_root_taxons",
   ).freeze
 
 
