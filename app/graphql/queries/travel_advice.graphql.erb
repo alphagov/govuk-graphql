@@ -1,3 +1,5 @@
+<%= render "fragments/parents" %>
+
 query travel_advice($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
     analytics_identifier
@@ -64,51 +66,7 @@ query travel_advice($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      parent: links_of_type(type: "parent") {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        links {
-          parent: links_of_type(type: "parent") {
-            api_path
-            api_url
-            base_path
-            content_id
-            description
-            document_type
-            links {
-              parent: links_of_type(type: "parent") {
-                api_path
-                api_url
-                base_path
-                content_id
-                description
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...Parents
       primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
         analytics_identifier
         api_path

@@ -1,238 +1,34 @@
+<%#
+Examples:
+- /set-up-free-school
+- /expenses-and-benefits-employee-suggestion-schemes
+%>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/mainstream_browse_pages" %>
+<%= render "fragments/ordered_related_items" %>
+<%= render "fragments/organisations" %>
+<%= render "fragments/parents" %>
+<%= render "fragments/primary_publishing_organisation" %>
+<%= render "fragments/suggested_ordered_related_items" %>
+<%= render "fragments/taxons" %>
+
 query answer($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       body
       external_related_links
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      mainstream_browse_pages: links_of_type(type: "mainstream_browse_pages") {
-        api_path
-        api_url
-        base_path
-        content_id
-        description
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      ordered_related_items: links_of_type(type: "ordered_related_items") {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        links {
-          mainstream_browse_pages: links_of_type(type: "mainstream_browse_pages") {
-            api_path
-            api_url
-            base_path
-            content_id
-            description
-            document_type
-            links {
-              parent: links_of_type(type: "parent") {
-                api_path
-                api_url
-                base_path
-                content_id
-                description
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      organisations: links_of_type(type: "organisations") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      parent: links_of_type(type: "parent") {
-        api_path
-        api_url
-        base_path
-        content_id
-        description
-        document_type
-        links {
-          parent: links_of_type(type: "parent") {
-            api_path
-            api_url
-            base_path
-            content_id
-            description
-            document_type
-            locale
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      suggested_ordered_related_items: links_of_type(type: "suggested_ordered_related_items") {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      taxons: links_of_type(type: "taxons") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          internal_name
-          notes_for_editors
-          visible_to_departmental_editors
-        }
-        document_type
-        links {
-          parent_taxons: links_of_type(type: "parent_taxons") {
-            api_path
-            api_url
-            base_path
-            content_id
-            description
-            details {
-              internal_name
-              notes_for_editors
-              visible_to_departmental_editors
-            }
-            document_type
-            links {
-              root_taxon: links_of_type(type: "root_taxon") {
-                api_path
-                api_url
-                base_path
-                content_id
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            phase
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        phase
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
+      ...MainstreamBrowsePages
+      ...OrderedRelatedItems
+      ...Organisations
+      ...Parents
+      ...PrimaryPublishingOrganisation
+      ...SuggestedOrderedRelatedItems
+      ...Taxons
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }
