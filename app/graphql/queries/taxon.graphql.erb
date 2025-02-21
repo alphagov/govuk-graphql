@@ -1,3 +1,5 @@
+<%= render "fragments/parent_and_root_taxons" %>
+
 query taxon($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
     analytics_identifier
@@ -45,49 +47,7 @@ query taxon($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      parent_taxons: links_of_type(type: "parent_taxons") {
-        api_path
-        api_url
-        base_path
-        content_id
-        description
-        details {
-          internal_name
-          notes_for_editors
-          visible_to_departmental_editors
-        }
-        document_type
-        links {
-          parent_taxons: links_of_type(type: "parent_taxons") {
-            api_path
-            api_url
-            base_path
-            content_id
-            description
-            details {
-              internal_name
-              notes_for_editors
-              url_override
-              visible_to_departmental_editors
-            }
-            document_type
-            locale
-            phase
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        phase
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...ParentAndRootTaxons
     }
     locale
     phase
