@@ -1,28 +1,20 @@
+<%#
+Examples:
+- https://www.gov.uk/government/history/past-prime-ministers
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/parents" %>
+
 query historic_appointments($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       appointments_without_historical_accounts
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
       historical_accounts: links_of_type(type: "historical_accounts") {
         api_path
         api_url
@@ -59,30 +51,7 @@ query historic_appointments($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      parent: links_of_type(type: "parent") {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...Parents
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

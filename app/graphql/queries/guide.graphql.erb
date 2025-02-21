@@ -1,178 +1,34 @@
+<%#
+Examples:
+- https://www.gov.uk/global-talent-researcher-academic
+- https://www.gov.uk/unclaimed-estates-bona-vacantia
+- https://www.gov.uk/appeal-planning-decision
+- https://www.gov.uk/penalty-points-endorsements
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/mainstream_browse_pages" %>
+<%= render "fragments/ordered_related_items" %>
+<%= render "fragments/organisations" %>
+<%= render "fragments/parents" %>
+<%= render "fragments/primary_publishing_organisation" %>
+
 query guide($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       external_related_links
       hide_chapter_navigation
       parts
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      embed: links_of_type(type: "embed") {
-        document_type
-        content_id
-        title
-        details {
-          json
-        }
-      }
-      mainstream_browse_pages: links_of_type(type: "mainstream_browse_pages") {
-        api_path
-        api_url
-        base_path
-        content_id
-        description
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      ordered_related_items: links_of_type(type: "ordered_related_items") {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        links {
-          mainstream_browse_pages: links_of_type(type: "mainstream_browse_pages") {
-            api_path
-            api_url
-            base_path
-            content_id
-            description
-            document_type
-            links {
-              parent: links_of_type(type: "parent") {
-                api_path
-                api_url
-                base_path
-                content_id
-                description
-                document_type
-                locale
-                public_updated_at
-                schema_name
-                title
-                web_url
-                withdrawn
-              }
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      organisations: links_of_type(type: "organisations") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      parent: links_of_type(type: "parent") {
-        api_path
-        api_url
-        base_path
-        content_id
-        description
-        document_type
-        links {
-          parent: links_of_type(type: "parent") {
-            api_path
-            api_url
-            base_path
-            content_id
-            description
-            document_type
-            locale
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
+      ...MainstreamBrowsePages
+      ...OrderedRelatedItems
+      ...Organisations
+      ...Parents
+      ...PrimaryPublishingOrganisation
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

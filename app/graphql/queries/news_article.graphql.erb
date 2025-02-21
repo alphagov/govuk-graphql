@@ -1,9 +1,22 @@
+<%#
+Examples:
+- https://www.gov.uk/government/news/davie-appointed-new-chair-of-creative-industries-council
+- https://www.gov.uk/government/news/statement-on-disturbance-at-hmp-ford
+- https://www.gov.uk/government/news/funding-boost-will-provide-200000-homes-on-brownfield-land
+- https://www.gov.uk/government/news/visit-to-chile-by-foreign-secretary-boris-johnson
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/government" %>
+<%= render "fragments/organisations" %>
+<%= render "fragments/original_primary_publishing_organisation" %>
+<%= render "fragments/primary_publishing_organisation" %>
+<%= render "fragments/suggested_ordered_related_items" %>
+
 query news_article($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       attachments
       body
@@ -14,121 +27,13 @@ query news_article($base_path: String!, $locale: String!) {
       political
       tags
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      government: links_of_type(type: "government") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          current
-          ended_on
-          started_on
-        }
-        document_type
-        locale
-        title
-        web_url
-      }
-      organisations: links_of_type(type: "organisations") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      original_primary_publishing_organisation: links_of_type(type: "original_primary_publishing_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      suggested_ordered_related_items: links_of_type(type: "suggested_ordered_related_items") {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
+      ...Government
+      ...Organisations
+      ...OriginalPrimaryPublishingOrganisation
+      ...PrimaryPublishingOrganisation
+      ...SuggestedOrderedRelatedItems
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

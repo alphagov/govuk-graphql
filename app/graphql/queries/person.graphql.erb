@@ -1,89 +1,27 @@
+<%#
+Examples:
+- https://www.gov.uk/government/people/geth-williams
+- https://www.gov.uk/government/people/anwar-choudhury
+- https://www.gov.uk/government/people/peter-wilson
+- https://www.gov.uk/government/people/matthew-kidd
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/role_appointments" %>
+
 query person($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       body
       full_name
       image
       privy_counsellor
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      role_appointments: links_of_type(type: "TODO - can be person or role, depending on the expected type of its parent", reverse: true) {
-        content_id
-        details {
-          current
-          ended_on
-          person_appointment_order
-          started_on
-        }
-        document_type
-        links {
-          person: links_of_type(type: "person") {
-            api_path
-            api_url
-            base_path
-            content_id
-            details {
-              body
-              image
-            }
-            document_type
-            locale
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-          role: links_of_type(type: "role") {
-            content_id
-            details {
-              body
-              role_payment_type
-            }
-            document_type
-            locale
-            public_updated_at
-            schema_name
-            title
-            withdrawn
-          }
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        withdrawn
-      }
+      ...AvailableTranslations
+      ...RoleAppointments
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

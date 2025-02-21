@@ -1,30 +1,26 @@
+<%#
+Examples:
+- https://www.gov.uk/world/organisations/british-deputy-high-commission-hyderabad/office/british-deputy-high-commission-hyderabad
+- https://www.gov.uk/world/organisations/british-embassy-pristina/office/visa-section
+- https://www.gov.uk/world/organisations/department-for-business-and-trade-united-arab-emirates/office/uk-trade-investment-abu-dhabi
+- https://www.gov.uk/world/organisations/british-embassy-lisbon/office/department-for-business-and-trade
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/parents" %>
+<%= render "fragments/worldwide_organisation" %>
+
 query worldwide_office($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       access_and_opening_times
       services
       type
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
       contact: links_of_type(type: "contact") {
         content_id
         details {
@@ -42,57 +38,8 @@ query worldwide_office($base_path: String!, $locale: String!) {
         title
         withdrawn
       }
-      parent: links_of_type(type: "parent") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        description
-        details {
-          default_news_image
-          logo
-          world_location_names
-        }
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      worldwide_organisation: links_of_type(type: "worldwide_organisation") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        description
-        details {
-          default_news_image
-          logo
-          world_location_names
-        }
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...Parents
+      ...WorldwideOrganisation
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

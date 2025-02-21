@@ -1,9 +1,19 @@
+<%#
+Examples:
+- https://www.gov.uk/government/history/past-prime-ministers/andrew-bonar-law
+- https://www.gov.uk/government/history/past-prime-ministers/harold-wilson
+- https://www.gov.uk/government/history/past-prime-ministers/william-ewart-gladstone
+- https://www.gov.uk/government/history/past-prime-ministers/david-cameron
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/ordered_related_items" %>
+<%= render "fragments/parents" %>
+
 query historic_appointment($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       body
       born
@@ -13,52 +23,10 @@ query historic_appointment($base_path: String!, $locale: String!) {
       major_acts
       political_party
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      ordered_related_items: links_of_type(type: "ordered_related_items") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          dates_in_office
-          political_party
-        }
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      parent: links_of_type(type: "parent") {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
+      ...OrderedRelatedItems
+      ...Parents
       person: links_of_type(type: "person") {
         api_path
         api_url
@@ -77,16 +45,5 @@ query historic_appointment($base_path: String!, $locale: String!) {
         withdrawn
       }
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

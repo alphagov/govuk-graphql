@@ -55,7 +55,7 @@ private
     query = render_to_string template: schema_name, formats: %i[graphql]
     result = GovukGraphqlSchema.execute(query, variables: { base_path:, locale: })
     errors = result["errors"]
-    edition = result.dig("data", "edition") {}
+    edition = result.dig("data", "edition") || {}
     edition["graphql_errors"] = errors if errors.present?
     edition
   end

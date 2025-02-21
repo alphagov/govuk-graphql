@@ -1,9 +1,14 @@
+<%#
+Examples:
+- https://www.gov.uk/government/organisations
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+
 query organisations_homepage($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       ordered_agencies_and_other_public_bodies
       ordered_devolved_administrations
@@ -13,33 +18,8 @@ query organisations_homepage($base_path: String!, $locale: String!) {
       ordered_non_ministerial_departments
       ordered_public_corporations
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

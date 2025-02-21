@@ -1,9 +1,19 @@
+<%#
+Examples:
+- https://www.gov.uk/tax-and-chancery-tribunal-decisions/email-signup
+- https://www.gov.uk/cma-cases/email-signup
+- https://www.gov.uk/search/transparency-and-freedom-of-information-releases/email-signup
+- https://www.gov.uk/animal-disease-cases-england/email-signup
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+<%= render "fragments/organisations" %>
+<%= render "fragments/related" %>
+
 query finder_email_signup($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
+    ...DefaultTopLevelFields
     details {
       beta
       email_filter_by
@@ -11,66 +21,10 @@ query finder_email_signup($base_path: String!, $locale: String!) {
       filter
       subscription_list_title_prefix
     }
-    document_type
-    first_published_at
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      organisations: links_of_type(type: "organisations") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      related: links_of_type(type: "related") {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
+      ...Organisations
+      ...Related
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }

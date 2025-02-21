@@ -1,25 +1,16 @@
+<%#
+Examples:
+- https://www.gov.uk/government/fields-of-operation
+%>
+
+<%= render "fragments/default_top_level_fields" %>
+<%= render "fragments/available_translations" %>
+
 query fields_of_operation($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
-    analytics_identifier
-    base_path
-    content_id
-    description
-    document_type
-    first_published_at
+    ...DefaultTopLevelFields
     links {
-      available_translations {
-        api_path
-        api_url
-        base_path
-        content_id
-        document_type
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
+      ...AvailableTranslations
       fields_of_operation: links_of_type(type: "fields_of_operation") {
         api_path
         api_url
@@ -34,16 +25,5 @@ query fields_of_operation($base_path: String!, $locale: String!) {
         withdrawn
       }
     }
-    locale
-    phase
-    public_updated_at
-    publishing_app
-    publishing_request_id
-    publishing_scheduled_at
-    rendering_app
-    scheduled_publishing_delay_seconds
-    schema_name
-    title
-    updated_at
   }
 }
