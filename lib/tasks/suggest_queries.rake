@@ -270,7 +270,7 @@ task suggest_queries: :environment do
           - #{rows.map { |_, bp,| "https://www.gov.uk#{bp}" }.join("\n- ")}
           %>
 
-          #{result.to_h.dig("data", "suggest_query")}
+          #{result.to_h.dig('data', 'suggest_query')}
         ERB
       end
     rescue StandardError => e

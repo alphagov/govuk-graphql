@@ -18,7 +18,6 @@ class GraphqlQueryBuilder
     "root_taxon" => "parent_and_root_taxons",
   ).freeze
 
-
   DEFAULT_TOP_LEVEL_FIELDS = %w[
     analytics_identifier
     base_path
