@@ -8,4 +8,11 @@ protected
     prometheus_labels = request.env.fetch("govuk.prometheus_labels", {})
     request.env["govuk.prometheus_labels"] = prometheus_labels.merge(schema_name:, locale:)
   end
+
+  def disable_gc
+    GC.disable
+    yield
+  ensure
+    GC.enable
+  end
 end
