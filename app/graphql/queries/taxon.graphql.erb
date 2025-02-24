@@ -9,6 +9,7 @@ Examples:
 <%= render "fragments/default_top_level_fields" %>
 <%= render "fragments/available_translations" %>
 <%= render "fragments/parent_and_root_taxons" %>
+<%= render "fragments/child_and_parent_taxons" %>
 
 query taxon($base_path: String!, $locale: String!) {
   edition(base_path: $base_path, locale: $locale) {
@@ -39,6 +40,7 @@ query taxon($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
+      ...ChildAndParentTaxons
       ...AvailableTranslations
       ...ParentAndRootTaxons
     }
