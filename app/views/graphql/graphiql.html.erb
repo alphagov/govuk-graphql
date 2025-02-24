@@ -75,20 +75,15 @@
 # their "root_taxon" link in reverse, as the homepage is the root taxon),
 # and popular_links, which are regular links from the homepage.
 #
-# There is also a suggest_query field, which can be used to suggest a query
-# based on the content-store response:
+# There's a content-store shim available at /api/content which should return
+# more or less the same responses as the live content-store.
 #
-# {
-#  suggest_query(base_path: "/")
-# }
+# You can see get the queries this uses at /queries/#{schema_name}. For example:
+# - /queries/homepage
+# - /queries/ministers_index
+# - /queries/guide
 #
-# This returns the query as a JSON string, which is inconvenient to
-# copy / paste.
-# You can format it nicely on the command line with jq if you copy the
-# whole response and then:
-#
-# pbpaste | jq -r '.data.suggest_query' | pbcopy
-#
+# Have fun!
 
 query {
   edition(base_path: "/") {
