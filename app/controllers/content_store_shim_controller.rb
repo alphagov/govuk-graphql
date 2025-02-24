@@ -15,7 +15,15 @@ class ContentStoreShimController < ApplicationController
   end
 
   def query
-    render template: params.fetch(:schema_name), formats: %i[graphql], content_type: "text/plain"
+    template_files = Dir.glob(Rails.root.join("app/graphql/queries/*.graphql.erb"))
+    schema_names = template_files.map { /\/([^\/]+)[.]graphql[.]erb\Z/.match(it)[1] }
+    schema_name_param = params.fetch(:schema_name)
+    schema_name = schema_names.find { it == schema_name_param }
+    if schema_name.nil?
+      render plain: "Schema named '#{schema_name_param}' not found", status: :not_found
+    else
+      render template: schema_name, formats: %i[graphql], content_type: "text/plain"
+    end
   end
 
   def compare_content_item
