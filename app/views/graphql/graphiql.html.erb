@@ -129,7 +129,7 @@ query {
 <script>
     const root = ReactDOM.createRoot(document.getElementById('graphiql'));
     const fetcher = GraphiQL.createFetcher({
-        url: '/graphql',
+        url: '/graphql?pp=async-flamegraph',
         headers: {
             'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content,
         },
