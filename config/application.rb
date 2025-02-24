@@ -43,7 +43,7 @@ module GovukGraphql
 
     config.sequel.after_connect = proc do
       Sequel.extension :pg_array_ops
-      Sequel::Model.db.extension :pg_json, :pg_array
+      Sequel::Model.db.extension :pg_json, :pg_array, :connection_validator
     end
   end
 end
