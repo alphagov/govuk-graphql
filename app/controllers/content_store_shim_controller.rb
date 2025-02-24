@@ -14,6 +14,10 @@ class ContentStoreShimController < ApplicationController
     end
   end
 
+  def query
+    render template: params.fetch(:schema_name), formats: %i[graphql], content_type: "text/plain"
+  end
+
   def compare_content_item
     base_path = "/#{params[:base_path]}"
     edition = get_edition(base_path)
