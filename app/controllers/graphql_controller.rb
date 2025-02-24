@@ -5,6 +5,7 @@ require "benchmark"
 class GraphqlController < ApplicationController
   protect_from_forgery with: :null_session, if: -> { request.headers["Authorization"].present? }
   protect_from_forgery with: :exception, unless: -> { request.headers["Authorization"].present? }
+  around_action :disable_gc, only: :execute, if: -> { Rails.env.development? }
 
   def graphiql; end
 
