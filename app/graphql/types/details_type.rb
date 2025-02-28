@@ -129,8 +129,9 @@ module Types
                        Govspeak::Document.new(body, { attachments: object[:attachments] })
                      end
 
-      govspeak_doc.send(:kramdown_doc).as_json["root"]
+      govspeak_doc.send(:kramdown_doc).as_json.dig("root", "children").map(&method(:compact_and_select_kramdown_fields))
     end
+
     field :key, GraphQL::Types::JSON, null: true
     field :label, GraphQL::Types::JSON, null: true
     field :label_text, GraphQL::Types::JSON, null: true
@@ -303,6 +304,29 @@ module Types
         html.gsub!(embed_code, content_block.render)
       end
       html
+    end
+
+    def compact_and_select_kramdown_fields(hash)
+      return if hash.nil?
+
+      allowed_keys = %w[attr value type children]
+
+      selected_hash = hash.select { |key,| allowed_keys.include?(key) }.transform_values do |value|
+        case value
+        in {}
+          nil
+        in []
+          nil
+        in Hash
+          compact_and_select_kramdown_fields(value)
+        in Array
+          value.map { |child| compact_and_select_kramdown_fields(child) }
+        else
+          value
+        end
+      end
+
+      selected_hash.compact
     end
   end
 end
