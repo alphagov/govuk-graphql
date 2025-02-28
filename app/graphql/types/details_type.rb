@@ -116,6 +116,21 @@ module Types
     field :international_delegations, GraphQL::Types::JSON, null: true
     field :introduction, GraphQL::Types::JSON, null: true
     field :introductory_paragraph, GraphQL::Types::JSON, null: true
+    def introductory_paragraph = process_body(object[:introductory_paragraph])
+
+    field :introductory_paragraph_ast, GraphQL::Types::JSON, null: true
+    def introductory_paragraph_ast
+      intro_para = object[:introductory_paragraph]
+      return nil unless intro_para
+      raise "Unexpected body format: #{intro_para.class}" unless intro_para.is_a?(Array)
+
+      govspeak_doc = case intro_para.map(&:deep_symbolize_keys)
+                     in [*, { content_type: "text/govspeak", content: String => body }, *]
+                       Govspeak::Document.new(body, { attachments: object[:attachments] })
+                     end
+
+      govspeak_doc.send(:kramdown_doc).as_json["root"]
+    end
     field :key, GraphQL::Types::JSON, null: true
     field :label, GraphQL::Types::JSON, null: true
     field :label_text, GraphQL::Types::JSON, null: true

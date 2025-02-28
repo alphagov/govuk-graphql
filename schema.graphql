@@ -89,6 +89,7 @@ type Details {
   international_delegations: JSON
   introduction: JSON
   introductory_paragraph: JSON
+  introductory_paragraph_ast: JSON
   json: JSON!
   key: JSON
   label: JSON
