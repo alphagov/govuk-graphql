@@ -37,7 +37,7 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
-  gem "rubocop-govuk", "~> 5.0", require: false
+  gem "rubocop-govuk", "~> 5.1", require: false
 
   gem "rack-mini-profiler", "~> 3.3"
   gem "stackprof", "~> 0.2.27"
