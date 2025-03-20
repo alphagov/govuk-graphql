@@ -103,7 +103,7 @@ GEM
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
     fiber-storage (1.0.0)
-    gds-api-adapters (98.3.0)
+    gds-api-adapters (98.4.0)
       addressable
       link_header
       null_logger
@@ -211,10 +211,10 @@ GEM
       net-smtp
     marcel (1.0.4)
     memo_wise (1.11.0)
-    mime-types (3.6.0)
+    mime-types (3.6.1)
       logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2025.0304)
+    mime-types-data (3.2025.0318)
     mini_mime (1.1.5)
     minitest (5.25.5)
     msgpack (1.8.0)
@@ -666,7 +666,7 @@ DEPENDENCIES
   content_block_tools (~> 0.4)
   csv
   debug
-  gds-api-adapters (~> 98.3)
+  gds-api-adapters (~> 98.4)
   gds-sso (~> 19.1)
   govspeak (~> 10.2)
   govuk_app_config (~> 9.16)
