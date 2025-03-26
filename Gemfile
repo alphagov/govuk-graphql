@@ -6,7 +6,7 @@ gem "graphql", "~> 2.4"
 
 gem "bootsnap", require: false
 gem "content_block_tools", "~> 0.4"
-gem "gds-api-adapters", "~> 98.4"
+gem "gds-api-adapters", "~> 99.0"
 gem "gds-sso", "~> 19.1"
 gem "govspeak", "~> 10.2"
 gem "govuk_app_config", "~> 9.16"
