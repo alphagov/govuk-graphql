@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "rails", "~> 8.0.2"
 
-gem "graphql", "~> 2.4"
+gem "graphql", "~> 2.5"
 
 gem "bootsnap", require: false
 gem "content_block_tools", "~> 0.4"

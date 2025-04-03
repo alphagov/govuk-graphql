@@ -172,7 +172,7 @@ GEM
       rouge
       sprockets (>= 3)
       sprockets-rails
-    graphql (2.4.16)
+    graphql (2.5.0)
       base64
       fiber-storage
       logger
@@ -670,7 +670,7 @@ DEPENDENCIES
   gds-sso (~> 19.1)
   govspeak (~> 10.2)
   govuk_app_config (~> 9.16)
-  graphql (~> 2.4)
+  graphql (~> 2.5)
   hashdiff (~> 1.1)
   memo_wise (~> 1.11)
   mutex_m
