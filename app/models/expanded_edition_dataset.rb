@@ -66,8 +66,7 @@ class ExpandedEditionDataset
                          .select(Sequel["1 - forward edition"].as(:type), *child_selections)
 
     forward_link_sets = edition_links_and_paths
-                          .join(:link_sets, content_id: Sequel[:edition_links][:content_id])
-                          .join(:links, link_set_id: :id, link_type: Sequel[:link_type_paths][:next])
+                          .join(:links, link_set_content_id: Sequel[:edition_links][:content_id], link_type: Sequel[:link_type_paths][:next])
                           .join(:documents, content_id: :target_content_id, locale: locale_filter)
                           .join(:editions, document_id: :id, state: state_filter)
                           .then { include_withdrawn ? it.left_outer_join(:unpublishings, edition_id: Sequel[:editions][:id]) : it }
@@ -84,8 +83,7 @@ class ExpandedEditionDataset
     reverse_link_sets = db[:edition_links]
                           .join(:reverse_link_type_paths, path: :path)
                           .join(:links, target_content_id: Sequel[:edition_links][:content_id], link_type: Sequel[:reverse_link_type_paths][:next])
-                          .join(:link_sets, id: :link_set_id)
-                          .join(:documents, content_id: :content_id, locale: locale_filter)
+                          .join(:documents, content_id: :link_set_content_id, locale: locale_filter)
                           .join(:editions, document_id: :id, state: state_filter)
                           .then { include_withdrawn ? it.left_outer_join(:unpublishings, edition_id: Sequel[:editions][:id]) : it }
                           .select(Sequel["4 - reverse link set"].as(:type), *child_selections)
