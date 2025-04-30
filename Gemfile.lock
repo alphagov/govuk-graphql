@@ -172,7 +172,7 @@ GEM
       rouge
       sprockets (>= 3)
       sprockets-rails
-    graphql (2.5.4)
+    graphql (2.5.5)
       base64
       fiber-storage
       logger
