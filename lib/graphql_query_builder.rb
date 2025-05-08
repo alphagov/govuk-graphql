@@ -88,19 +88,19 @@ private
       case entry
       in [String, {}]
         nil
-      in [ "details", Hash => details ]
+      in ["details", Hash => details]
         [
           "details {",
           details.map { |details_key, _| "  #{details_key}" },
           "}",
         ]
-      in [ "links", Hash => links ]
+      in ["links", Hash => links]
         [
           "links {",
           links.map { |link_key, link_value| "  #{build_links_query(link_key, link_value, indent + 2)}" },
           "}",
         ]
-      in [ String => key, String | Numeric | true | false | nil ]
+      in [String => key, String | Numeric | true | false | nil]
         key
       end
     end
