@@ -7,214 +7,98 @@ Examples:
 <%= render "fragments/available_translations" %>
 <%= render "fragments/suggested_ordered_related_items" %>
 
-query ministers_index($base_path: String!, $locale: String!) {
-  edition(base_path: $base_path, locale: $locale) {
+fragment Person on Edition {
+  title
+  base_path
+  details {
+    image
+  }
+  links {
+    role_appointments: links_of_type(type: "person", reverse: true) {
+      links {
+        role: links_of_type(type: "role") {
+          title
+          base_path
+        }
+      }
+    }
+  }
+}
+
+fragment PersonWithRoleOrgs on Edition {
+  ...Person
+  links {
+    role_appointments: links_of_type(type: "person", reverse: true) {
+      links {
+        role: links_of_type(type: "role") {
+          title
+          base_path
+          links {
+            organisation: links_of_type(type: "ordered_roles", reverse: true) {
+              content_id
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment Department on Edition {
+  base_path
+  links {
+    ordered_ministers: links_of_type(type: "ordered_ministers") {
+      ...PersonWithRoleOrgs
+    }
+  }
+}
+
+query ministers_index {
+  edition(
+    base_path: "/government/ministers"
+    locale: "en"
+    include_drafts: false
+    include_withdrawn: false
+  ) {
     ...DefaultTopLevelFields
     details {
       body
     }
     links {
       ...AvailableTranslations
-      ordered_also_attends_cabinet: links_of_type(type: "ordered_also_attends_cabinet") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          image
-          privy_counsellor
-        }
-        document_type
-        links {
-          ...RoleAppointments
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
+      ordered_cabinet_ministers: links_of_type(type: "ordered_cabinet_ministers") {
+        ...Person
+      }
+      ordered_also_attends_cabinet: links_of_type(
+        type: "ordered_also_attends_cabinet"
+      ) {
+        ...Person
+      }
+      ordered_ministerial_departments: links_of_type(
+        type: "ordered_ministerial_departments"
+      ) {
+        ...Department
       }
       ordered_assistant_whips: links_of_type(type: "ordered_assistant_whips") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          image
-          privy_counsellor
-        }
-        document_type
-        links {
-          ...RoleAppointments
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
+        ...Person
       }
-      ordered_baronesses_and_lords_in_waiting_whips: links_of_type(type: "ordered_baronesses_and_lords_in_waiting_whips") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          image
-          privy_counsellor
-        }
-        document_type
-        links {
-          ...RoleAppointments
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      ordered_cabinet_ministers: links_of_type(type: "ordered_cabinet_ministers") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          image
-          privy_counsellor
-        }
-        document_type
-        links {
-          ...RoleAppointments
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
+      ordered_baronesses_and_lords_in_waiting_whips: links_of_type(
+        type: "ordered_baronesses_and_lords_in_waiting_whips"
+      ) {
+        ...Person
       }
       ordered_house_lords_whips: links_of_type(type: "ordered_house_lords_whips") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          image
-          privy_counsellor
-        }
-        document_type
-        links {
-          ...RoleAppointments
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
+        ...Person
       }
-      ordered_house_of_commons_whips: links_of_type(type: "ordered_house_of_commons_whips") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          image
-          privy_counsellor
-        }
-        document_type
-        links {
-          ...RoleAppointments
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
+      ordered_house_of_commons_whips: links_of_type(
+        type: "ordered_house_of_commons_whips"
+      ) {
+        ...Person
       }
-      ordered_junior_lords_of_the_treasury_whips: links_of_type(type: "ordered_junior_lords_of_the_treasury_whips") {
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          image
-          privy_counsellor
-        }
-        document_type
-        links {
-          ...RoleAppointments
-        }
-        locale
-        public_updated_at
-        schema_name
-        title
-        web_url
-        withdrawn
-      }
-      ordered_ministerial_departments: links_of_type(type: "ordered_ministerial_departments") {
-        analytics_identifier
-        api_path
-        api_url
-        base_path
-        content_id
-        details {
-          acronym
-          brand
-          default_news_image
-          logo
-          organisation_govuk_status
-        }
-        document_type
-        links {
-          ordered_ministers: links_of_type(type: "ordered_ministers") {
-            api_path
-            api_url
-            base_path
-            content_id
-            details {
-              image
-              privy_counsellor
-            }
-            document_type
-            links {
-              ...RoleAppointments
-            }
-            locale
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-          ordered_roles: links_of_type(type: "ordered_roles") {
-            api_path
-            api_url
-            base_path
-            content_id
-            details {
-              body
-              role_payment_type
-              seniority
-              whip_organisation
-            }
-            document_type
-            locale
-            public_updated_at
-            schema_name
-            title
-            web_url
-            withdrawn
-          }
-        }
-        locale
-        schema_name
-        title
-        web_url
-        withdrawn
+      ordered_junior_lords_of_the_treasury_whips: links_of_type(
+        type: "ordered_junior_lords_of_the_treasury_whips"
+      ) {
+        ...Person
       }
       ...SuggestedOrderedRelatedItems
     }
