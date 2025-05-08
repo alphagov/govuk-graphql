@@ -61,7 +61,7 @@ module PathTreeHelpers
   def self.build_segment(selection)
     segment = {}
     segment = segment.merge(selection.arguments)
-    selection.ast_nodes.map(&:alias).uniq => [ selection_alias ]
+    selection.ast_nodes.map(&:alias).uniq => [selection_alias]
     segment = segment.merge({ alias: selection_alias }) if selection_alias.present?
     segment.merge({ columns: (selection.selections.map(&:name).to_set & ALL_EDITION_COLUMNS).index_with(true) })
   end
