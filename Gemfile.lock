@@ -210,7 +210,7 @@ GEM
       net-pop
       net-smtp
     marcel (1.0.4)
-    memo_wise (1.12.0)
+    memo_wise (1.13.0)
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
@@ -684,7 +684,7 @@ DEPENDENCIES
   govuk_app_config (~> 9.17)
   graphql (~> 2.5)
   hashdiff (~> 1.1)
-  memo_wise (~> 1.12)
+  memo_wise (~> 1.13)
   mutex_m
   pg (~> 1.5)
   puma (>= 5.0)
