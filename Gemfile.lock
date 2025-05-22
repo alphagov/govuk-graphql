@@ -183,7 +183,7 @@ GEM
       base64
       fiber-storage
       logger
-    hashdiff (1.1.2)
+    hashdiff (1.2.0)
     hashie (5.0.0)
     htmlentities (4.3.4)
     http-accept (1.7.0)
@@ -691,7 +691,7 @@ DEPENDENCIES
   govspeak (~> 10.2)
   govuk_app_config (~> 9.17)
   graphql (~> 2.5)
-  hashdiff (~> 1.1)
+  hashdiff (~> 1.2)
   memo_wise (~> 1.13)
   mutex_m
   pg (~> 1.5)
