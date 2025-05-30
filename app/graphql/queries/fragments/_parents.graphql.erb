@@ -20,13 +20,13 @@ fragment Parent on Edition {
 }
 
 fragment Parents on Links {
-  parent: links_of_type(type: "parent") {
+  parent: links_of_type(type: parent) {
     ...Parent
     links {
-      parent: links_of_type(type: "parent") {
+      parent: links_of_type(type: parent) {
         ...Parent
         links {
-          parent: links_of_type(type: "parent") {
+          parent: links_of_type(type: parent) {
             ...Parent
           }
         },

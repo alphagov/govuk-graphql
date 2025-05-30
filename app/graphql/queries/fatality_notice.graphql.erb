@@ -26,7 +26,7 @@ query fatality_notice($base_path: String!, $locale: String!) {
     }
     links {
       ...AvailableTranslations
-      field_of_operation: links_of_type(type: "field_of_operation") {
+      field_of_operation: links_of_type(type: field_of_operation) {
         api_path
         api_url
         base_path

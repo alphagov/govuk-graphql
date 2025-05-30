@@ -98,12 +98,12 @@ query {
     first_published_at
 
     links {
-      level_one_taxons: links_of_type(type: "root_taxon", reverse: true) {
+      level_one_taxons: links_of_type(type: root_taxon, reverse: true) {
         base_path
         content_id
         document_type
       }
-      popular_links: links_of_type(type: "popular_links") {
+      popular_links: links_of_type(type: popular_links) {
         base_path
         title
         document_type

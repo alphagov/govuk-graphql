@@ -134,7 +134,7 @@ level_one_taxons {
 }
 
 # We have:
-level_one_taxons: links_of_type(type: "root_taxon", reverse: true) {
+level_one_taxons: links_of_type(type: root_taxon, reverse: true) {
   base_path
   content_id
   details
@@ -157,13 +157,13 @@ query homepage {
     first_published_at
 
     links {
-      level_one_taxons: links_of_type(type: "root_taxon", reverse: true) {
+      level_one_taxons: links_of_type(type: root_taxon, reverse: true) {
         base_path
         content_id
         details
         document_type
       }
-      primary_publishing_organisation: links_of_type(type: "primary_publishing_organisation") {
+      primary_publishing_organisation: links_of_type(type: primary_publishing_organisation) {
         base_path
         title
         details
@@ -211,9 +211,9 @@ fragment Person on Edition {
     base_path
     details
     links {
-        role_appointments: links_of_type(type: "person", reverse: true) {
+        role_appointments: links_of_type(type: person, reverse: true) {
             links {
-                role: links_of_type(type: "role") {
+                role: links_of_type(type: role) {
                     title
                     base_path
                 }
@@ -225,10 +225,10 @@ fragment Person on Edition {
 fragment Department on Edition {
     base_path
     links {
-        ordered_ministers: links_of_type(type: "ordered_ministers") {
+        ordered_ministers: links_of_type(type: ordered_ministers) {
             base_path
         }
-        ordered_roles: links_of_type(type: "ordered_roles") {
+        ordered_roles: links_of_type(type: ordered_roles) {
             content_id
         }
     }
@@ -238,37 +238,37 @@ query ministers_index {
     edition(base_path: "/government/ministers") {
         title
         links {
-            ordered_cabinet_ministers: links_of_type(type: "ordered_cabinet_ministers") {
+            ordered_cabinet_ministers: links_of_type(type: ordered_cabinet_ministers) {
                 ...Person
             }
             ordered_also_attends_cabinet: links_of_type(
-                type: "ordered_also_attends_cabinet"
+                type: ordered_also_attends_cabinet
             ) {
                 ...Person
             }
             ordered_ministerial_departments: links_of_type(
-                type: "ordered_ministerial_departments"
+                type: ordered_ministerial_departments
             ) {
                 ...Department
             }
-            ordered_assistant_whips: links_of_type(type: "ordered_assistant_whips") {
+            ordered_assistant_whips: links_of_type(type: ordered_assistant_whips) {
                 ...Person
             }
             ordered_baronesses_and_lords_in_waiting_whips: links_of_type(
-                type: "ordered_baronesses_and_lords_in_waiting_whips"
+                type: ordered_baronesses_and_lords_in_waiting_whips
             ) {
                 ...Person
             }
-            ordered_house_lords_whips: links_of_type(type: "ordered_house_lords_whips") {
+            ordered_house_lords_whips: links_of_type(type: ordered_house_lords_whips) {
                 ...Person
             }
             ordered_house_of_commons_whips: links_of_type(
-                type: "ordered_house_of_commons_whips"
+                type: ordered_house_of_commons_whips
             ) {
                 ...Person
             }
             ordered_junior_lords_of_the_treasury_whips: links_of_type(
-                type: "ordered_junior_lords_of_the_treasury_whips"
+                type: ordered_junior_lords_of_the_treasury_whips
             ) {
                 ...Person
             }

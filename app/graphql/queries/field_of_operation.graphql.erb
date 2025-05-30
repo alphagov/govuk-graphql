@@ -15,7 +15,7 @@ query field_of_operation($base_path: String!, $locale: String!) {
     ...DefaultTopLevelFields
     links {
       ...AvailableTranslations
-      fatality_notices: links_of_type(type: "fatality_notices") {
+      fatality_notices: links_of_type(type: fatality_notices) {
         api_path
         api_url
         base_path

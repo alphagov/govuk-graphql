@@ -31,7 +31,7 @@ query case_study($base_path: String!, $locale: String!) {
     links {
       ...AvailableTranslations
       ...DocumentCollections
-      lead_organisations: links_of_type(type: "lead_organisations") {
+      lead_organisations: links_of_type(type: lead_organisations) {
         analytics_identifier
         api_path
         api_url

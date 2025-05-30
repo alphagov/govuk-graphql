@@ -1,12 +1,12 @@
 fragment OrderedRelatedItems on Links {
-  ordered_related_items: links_of_type(type: "ordered_related_items") {
+  ordered_related_items: links_of_type(type: ordered_related_items) {
     api_path
     api_url
     base_path
     content_id
     document_type
     links {
-      mainstream_browse_pages: links_of_type(type: "mainstream_browse_pages") {
+      mainstream_browse_pages: links_of_type(type: mainstream_browse_pages) {
         api_path
         api_url
         base_path
@@ -14,7 +14,7 @@ fragment OrderedRelatedItems on Links {
         description
         document_type
         links {
-          parent: links_of_type(type: "parent") {
+          parent: links_of_type(type: parent) {
             api_path
             api_url
             base_path

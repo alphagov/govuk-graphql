@@ -27,7 +27,7 @@ query historic_appointment($base_path: String!, $locale: String!) {
       ...AvailableTranslations
       ...OrderedRelatedItems
       ...Parents
-      person: links_of_type(type: "person") {
+      person: links_of_type(type: person) {
         api_path
         api_url
         base_path

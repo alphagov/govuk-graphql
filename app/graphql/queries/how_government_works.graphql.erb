@@ -18,7 +18,7 @@ query how_government_works($base_path: String!, $locale: String!) {
     }
     links {
       ...AvailableTranslations
-      current_prime_minister: links_of_type(type: "current_prime_minister") {
+      current_prime_minister: links_of_type(type: current_prime_minister) {
         api_path
         api_url
         base_path

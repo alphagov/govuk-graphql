@@ -28,7 +28,7 @@ query service_manual_guide($base_path: String!, $locale: String!) {
       ...ContentOwners
       ...Organisations
       ...PrimaryPublishingOrganisation
-      service_manual_topics: links_of_type(type: "service_manual_topics") {
+      service_manual_topics: links_of_type(type: service_manual_topics) {
         api_path
         api_url
         base_path

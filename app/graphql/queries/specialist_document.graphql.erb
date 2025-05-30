@@ -25,7 +25,7 @@ query specialist_document($base_path: String!, $locale: String!) {
     }
     links {
       ...AvailableTranslations
-      finder: links_of_type(type: "finder") {
+      finder: links_of_type(type: finder) {
         api_path
         api_url
         base_path
