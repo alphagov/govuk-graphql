@@ -7,18 +7,34 @@ Examples:
 <%= render "fragments/available_translations" %>
 <%= render "fragments/suggested_ordered_related_items" %>
 
+fragment Role on Edition {
+  title
+  base_path
+  web_url
+  content_id
+  details {
+    seniority
+    role_payment_type
+    whip_organisation
+  }
+}
+
 fragment Person on Edition {
   title
   base_path
+  web_url
   details {
     image
+    privy_counsellor
   }
   links {
     role_appointments: links_of_type(type: "person", reverse: true) {
+      details {
+        current
+      }
       links {
         role: links_of_type(type: "role") {
-          title
-          base_path
+          ...Role
         }
       }
     }
@@ -29,12 +45,14 @@ fragment PersonWithRoleOrgs on Edition {
   ...Person
   links {
     role_appointments: links_of_type(type: "person", reverse: true) {
+      details {
+        current
+      }
       links {
         role: links_of_type(type: "role") {
-          title
-          base_path
+          ...Role
           links {
-            organisation: links_of_type(type: "ordered_roles", reverse: true) {
+            organisations: links_of_type(type: "ordered_roles", reverse: true) {
               content_id
             }
           }
@@ -46,6 +64,13 @@ fragment PersonWithRoleOrgs on Edition {
 
 fragment Department on Edition {
   base_path
+  web_url
+  title
+  content_id
+  details {
+    logo
+    brand
+  }
   links {
     ordered_ministers: links_of_type(type: "ordered_ministers") {
       ...PersonWithRoleOrgs
