@@ -35,7 +35,7 @@ query organisation($base_path: String!, $locale: String!) {
     }
     links {
       ...AvailableTranslations
-      ordered_board_members: links_of_type(type: "ordered_board_members") {
+      ordered_board_members: links_of_type(type: ordered_board_members) {
         api_path
         api_url
         base_path
@@ -55,7 +55,7 @@ query organisation($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      ordered_contacts: links_of_type(type: "ordered_contacts") {
+      ordered_contacts: links_of_type(type: ordered_contacts) {
         content_id
         details {
           contact_form_links
@@ -72,7 +72,7 @@ query organisation($base_path: String!, $locale: String!) {
         title
         withdrawn
       }
-      ordered_foi_contacts: links_of_type(type: "ordered_foi_contacts") {
+      ordered_foi_contacts: links_of_type(type: ordered_foi_contacts) {
         content_id
         details {
           contact_form_links
@@ -90,7 +90,7 @@ query organisation($base_path: String!, $locale: String!) {
         withdrawn
       }
       ...OrderedParentOrganisations
-      ordered_roles: links_of_type(type: "ordered_roles") {
+      ordered_roles: links_of_type(type: ordered_roles) {
         content_id
         details {
           body

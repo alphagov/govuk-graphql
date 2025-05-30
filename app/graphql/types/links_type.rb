@@ -2,7 +2,7 @@ module Types
   class LinksType < Types::BaseObject
     field :available_translations, [EditionType], null: true, extras: [:lookahead]
     field :links_of_type, [EditionType], extras: [:ast_node] do
-      argument :type, String, required: true
+      argument :type, LinkType, required: true
       argument :reverse, Boolean, default_value: false
     end
 

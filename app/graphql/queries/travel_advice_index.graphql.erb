@@ -31,7 +31,7 @@ query travel_advice_index($base_path: String!, $locale: String!) {
       ...Organisations
       ...Parents
       ...PrimaryPublishingOrganisation
-      related_to_step_navs: links_of_type(type: "pages_related_to_step_nav", reverse: true) {
+      related_to_step_navs: links_of_type(type: pages_related_to_step_nav, reverse: true) {
         api_path
         api_url
         base_path
@@ -41,7 +41,7 @@ query travel_advice_index($base_path: String!, $locale: String!) {
         }
         document_type
         links {
-          pages_related_to_step_nav: links_of_type(type: "pages_related_to_step_nav") {
+          pages_related_to_step_nav: links_of_type(type: pages_related_to_step_nav) {
             api_path
             api_url
             base_path

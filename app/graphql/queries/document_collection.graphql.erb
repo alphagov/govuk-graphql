@@ -28,7 +28,7 @@ query document_collection($base_path: String!, $locale: String!) {
     }
     links {
       ...AvailableTranslations
-      documents: links_of_type(type: "documents") {
+      documents: links_of_type(type: documents) {
         api_path
         api_url
         base_path

@@ -28,7 +28,7 @@ query manual($base_path: String!, $locale: String!) {
       ...DocumentCollections
       ...Organisations
       ...PrimaryPublishingOrganisation
-      sections: links_of_type(type: "sections") {
+      sections: links_of_type(type: sections) {
         api_path
         api_url
         base_path

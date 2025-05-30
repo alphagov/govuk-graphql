@@ -24,23 +24,23 @@ fragment Taxon on Edition {
 <%# We don't expand the whole taxonomy when looking at the root, so we only need the 4 levels. %>
 <%# The first level expands the backlink to parent, but lower levels do not. %>
 fragment ChildAndParentTaxons on Links {
-  child_taxons: links_of_type(type: "parent_taxons", reverse: true) {
+  child_taxons: links_of_type(type: parent_taxons, reverse: true) {
     ...Taxon
     links {
-      child_taxons: links_of_type(type: "parent_taxons", reverse: true) {
+      child_taxons: links_of_type(type: parent_taxons, reverse: true) {
         ...Taxon
         links {
-          child_taxons: links_of_type(type: "parent_taxons", reverse: true) {
+          child_taxons: links_of_type(type: parent_taxons, reverse: true) {
             ...Taxon
             links {
-              child_taxons: links_of_type(type: "parent_taxons", reverse: true) {
+              child_taxons: links_of_type(type: parent_taxons, reverse: true) {
                 ...Taxon
               }
             }
           }
         }
       }
-      parent_taxons: links_of_type(type: "parent_taxons") {
+      parent_taxons: links_of_type(type: parent_taxons) {
         ...Taxon
       }
     }

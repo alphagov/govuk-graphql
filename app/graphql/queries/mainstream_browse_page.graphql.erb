@@ -22,7 +22,7 @@ query mainstream_browse_page($base_path: String!, $locale: String!) {
       second_level_ordering
     }
     links {
-      active_top_level_browse_page: links_of_type(type: "active_top_level_browse_page") {
+      active_top_level_browse_page: links_of_type(type: active_top_level_browse_page) {
         api_path
         api_url
         base_path
@@ -40,7 +40,7 @@ query mainstream_browse_page($base_path: String!, $locale: String!) {
       ...Children
       ...Parents
       ...PrimaryPublishingOrganisation
-      second_level_browse_pages: links_of_type(type: "second_level_browse_pages") {
+      second_level_browse_pages: links_of_type(type: second_level_browse_pages) {
         api_path
         api_url
         base_path
@@ -54,7 +54,7 @@ query mainstream_browse_page($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      top_level_browse_pages: links_of_type(type: "top_level_browse_pages") {
+      top_level_browse_pages: links_of_type(type: top_level_browse_pages) {
         api_path
         api_url
         base_path

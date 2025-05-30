@@ -30,7 +30,7 @@ query worldwide_organisation($base_path: String!, $locale: String!) {
     links {
       ...AvailableTranslations
       ...Children
-      contacts: links_of_type(type: "contacts") {
+      contacts: links_of_type(type: contacts) {
         content_id
         details {
           contact_form_links
@@ -47,7 +47,7 @@ query worldwide_organisation($base_path: String!, $locale: String!) {
         title
         withdrawn
       }
-      corporate_information_pages: links_of_type(type: "corporate_information_pages") {
+      corporate_information_pages: links_of_type(type: corporate_information_pages) {
         api_path
         api_url
         base_path
@@ -60,7 +60,7 @@ query worldwide_organisation($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      main_office: links_of_type(type: "main_office") {
+      main_office: links_of_type(type: main_office) {
         api_path
         api_url
         base_path
@@ -76,7 +76,7 @@ query worldwide_organisation($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      primary_role_person: links_of_type(type: "primary_role_person") {
+      primary_role_person: links_of_type(type: primary_role_person) {
         api_path
         api_url
         base_path
@@ -95,7 +95,7 @@ query worldwide_organisation($base_path: String!, $locale: String!) {
       }
       ...RoleAppointments
       ...Roles
-      sponsoring_organisations: links_of_type(type: "sponsoring_organisations") {
+      sponsoring_organisations: links_of_type(type: sponsoring_organisations) {
         analytics_identifier
         api_path
         api_url

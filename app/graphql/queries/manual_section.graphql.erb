@@ -24,7 +24,7 @@ query manual_section($base_path: String!, $locale: String!) {
     }
     links {
       ...AvailableTranslations
-      manual: links_of_type(type: "manual") {
+      manual: links_of_type(type: manual) {
         api_path
         api_url
         base_path

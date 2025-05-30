@@ -34,7 +34,7 @@ query speech($base_path: String!, $locale: String!) {
       ...Government
       ...Organisations
       ...OriginalPrimaryPublishingOrganisation
-      people: links_of_type(type: "people") {
+      people: links_of_type(type: people) {
         api_path
         api_url
         base_path
@@ -49,7 +49,7 @@ query speech($base_path: String!, $locale: String!) {
       }
       ...PrimaryPublishingOrganisation
       ...Roles
-      speaker: links_of_type(type: "speaker") {
+      speaker: links_of_type(type: speaker) {
         api_path
         api_url
         base_path

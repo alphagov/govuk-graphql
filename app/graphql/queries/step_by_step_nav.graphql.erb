@@ -26,7 +26,7 @@ query step_by_step_nav($base_path: String!, $locale: String!) {
       ...AvailableTranslations
       ...MainstreamBrowsePages
       ...Organisations
-      pages_part_of_step_nav: links_of_type(type: "pages_part_of_step_nav") {
+      pages_part_of_step_nav: links_of_type(type: pages_part_of_step_nav) {
         api_path
         api_url
         base_path
@@ -39,7 +39,7 @@ query step_by_step_nav($base_path: String!, $locale: String!) {
         web_url
         withdrawn
       }
-      pages_related_to_step_nav: links_of_type(type: "pages_related_to_step_nav") {
+      pages_related_to_step_nav: links_of_type(type: pages_related_to_step_nav) {
         api_path
         api_url
         base_path

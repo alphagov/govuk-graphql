@@ -15,7 +15,7 @@ query historic_appointments($base_path: String!, $locale: String!) {
     }
     links {
       ...AvailableTranslations
-      historical_accounts: links_of_type(type: "historical_accounts") {
+      historical_accounts: links_of_type(type: historical_accounts) {
         api_path
         api_url
         base_path
@@ -26,7 +26,7 @@ query historic_appointments($base_path: String!, $locale: String!) {
         }
         document_type
         links {
-          person: links_of_type(type: "person") {
+          person: links_of_type(type: person) {
             api_path
             api_url
             base_path

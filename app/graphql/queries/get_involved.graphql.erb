@@ -16,7 +16,7 @@ query get_involved($base_path: String!, $locale: String!) {
       ...AvailableTranslations
       ...MainstreamBrowsePages
       ...SuggestedOrderedRelatedItems
-      take_part_pages: links_of_type(type: "take_part_pages") {
+      take_part_pages: links_of_type(type: take_part_pages) {
         api_path
         api_url
         base_path

@@ -224,7 +224,7 @@ type Details {
 type Edition {
   analytics_identifier: String
   api_path: String!
-  api_url: String!
+  api_url: String! @deprecated(reason: "Use `api_path` instead")
   base_path: String
   content_id: String!
   content_store: String!
@@ -258,7 +258,7 @@ type Edition {
   update_type: String
   updated_at: ISO8601DateTime!
   user_facing_version: Int
-  web_url: String!
+  web_url: String! @deprecated(reason: "Use `base_path` instead")
   withdrawn: Boolean!
   withdrawn_notice: JSON!
 }
@@ -273,9 +273,113 @@ Represents untyped JSON
 """
 scalar JSON
 
+enum Link {
+  active_top_level_browse_page
+  associated_taxons
+  children
+  contact
+  contacts
+  content_owners
+  corporate_information_pages
+  current_prime_minister
+  documents
+  email_alert_signup
+  embed
+  facet_group
+  facet_groups
+  facet_values
+  facets
+  fatality_notices
+  featured_policies
+  field_of_operation
+  fields_of_operation
+  finder
+  government
+  historical_accounts
+  home_page_offices
+  lead_organisations
+  linked_items
+  main_office
+  mainstream_browse_pages
+  manual
+  meets_user_needs
+  ministerial
+  office_staff
+  ordered_also_attends_cabinet
+  ordered_assistant_whips
+  ordered_baronesses_and_lords_in_waiting_whips
+  ordered_board_members
+  ordered_cabinet_ministers
+  ordered_chief_professional_officers
+  ordered_child_organisations
+  ordered_contacts
+  ordered_current_appointments
+  ordered_featured_policies
+  ordered_foi_contacts
+  ordered_high_profile_groups
+  ordered_house_lords_whips
+  ordered_house_of_commons_whips
+  ordered_junior_lords_of_the_treasury_whips
+  ordered_military_personnel
+  ordered_ministerial_departments
+  ordered_ministers
+  ordered_parent_organisations
+  ordered_previous_appointments
+  ordered_related_items
+  ordered_related_items_overrides
+  ordered_roles
+  ordered_special_representatives
+  ordered_successor_organisations
+  ordered_traffic_commissioners
+  organisations
+  original_primary_publishing_organisation
+  pages_part_of_step_nav
+  pages_related_to_step_nav
+  pages_secondary_to_step_nav
+  parent
+  parent_taxons
+  people
+  person
+  policies
+  policy_areas
+  popular_links
+  press_releases
+  primary_publishing_organisation
+  primary_role_person
+  related
+  related_guides
+  related_mainstream
+  related_mainstream_content
+  related_policies
+  related_statistical_data_sets
+  related_topics
+  role
+  role_appointments
+  roles
+  root_taxon
+  second_level_browse_pages
+  secondary_role_person
+  sections
+  service_manual_topics
+  speaker
+  sponsoring_organisations
+  suggested_ordered_related_items
+  supporting_organisations
+  taxonomy_topic_email_override
+  taxons
+  top_level_browse_pages
+  topical_events
+  topics
+  working_groups
+  world_locations
+  worldwide_organisation
+  worldwide_organisations
+  worldwide_priorities
+}
+
 type Links {
   available_translations: [Edition!]
-  links_of_type(reverse: Boolean! = false, type: String!): [Edition!]
+  links_of_type(reverse: Boolean! = false, type: Link!): [Edition!]
 }
 
 type Query {
@@ -283,5 +387,5 @@ type Query {
   Edition with expanded links
   """
   edition(base_path: String!, include_drafts: Boolean = false, include_withdrawn: Boolean = false, locale: String = "en"): Edition
-  suggest_query(base_path: String!): String
+  suggest_query(base_path: String!, use_fragments: Boolean): String
 }
