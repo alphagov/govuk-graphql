@@ -509,7 +509,7 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.16)
-    rack-mini-profiler (3.3.1)
+    rack-mini-profiler (4.0.0)
       rack (>= 1.2.0)
     rack-protection (4.1.1)
       base64 (>= 0.1.0)
@@ -696,7 +696,7 @@ DEPENDENCIES
   mutex_m
   pg (~> 1.5)
   puma (>= 5.0)
-  rack-mini-profiler (~> 3.3)
+  rack-mini-profiler (~> 4.0)
   rails (~> 8.0.2)
   rubocop-govuk (~> 5.1)
   sequel (~> 5.93)
