@@ -126,7 +126,10 @@ module Types
 
       govspeak_doc = case intro_para.map(&:deep_symbolize_keys)
                      in [*, { content_type: "text/govspeak", content: String => body }, *]
-                       Govspeak::Document.new(body, { attachments: object[:attachments] })
+                       Govspeak::Document.new(body, {
+                         attachments: object[:attachments],
+                         locale: object.dig(:parent, :locale),
+                       })
                      end
 
       govspeak_doc.send(:kramdown_doc).as_json.dig("root", "children").map(&method(:compact_and_select_kramdown_fields))
@@ -280,7 +283,10 @@ module Types
              in [*, { content_type: "text/html", content: String => body }, *]
                body
              in [*, { content_type: "text/govspeak", content: String => body }, *]
-               Govspeak::Document.new(body, { attachments: object[:attachments] }).to_html
+               Govspeak::Document.new(body, {
+                 attachments: object[:attachments],
+                 locale: object.dig(:parent, :locale),
+               }).to_html
              end
 
       embeds = object.dig(:parent, :links, "embed")
