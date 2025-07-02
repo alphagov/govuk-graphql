@@ -13,7 +13,7 @@ gem "govuk_app_config", "~> 9.17"
 gem "hashdiff", "~> 1.2"
 gem "memo_wise", "~> 1.13"
 gem "pg", "~> 1.5"
-gem "sequel", "~> 5.93"
+gem "sequel", "~> 5.94"
 gem "sequel_pg", "~> 1.17", require: "sequel"
 gem "sequel-rails", "~> 1.2"
 
