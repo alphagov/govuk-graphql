@@ -85,9 +85,9 @@ GEM
     builder (3.3.0)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.3)
-    content_block_tools (0.12.3)
+    content_block_tools (0.13.0)
       actionview (>= 6)
-      govspeak (= 10.4.1)
+      govspeak (= 10.6.0)
     crass (1.0.6)
     csv (3.3.5)
     date (3.4.1)
@@ -145,7 +145,7 @@ GEM
       rake (>= 13)
     googleapis-common-protos-types (1.20.0)
       google-protobuf (>= 3.18, < 5.a)
-    govspeak (10.4.1)
+    govspeak (10.6.0)
       actionview (>= 6, < 8.0.3)
       addressable (>= 2.3.8, < 2.8.8)
       govuk_publishing_components (>= 43)
@@ -170,7 +170,7 @@ GEM
     govuk_personalisation (1.1.0)
       plek (>= 1.9.0)
       rails (>= 6, < 9)
-    govuk_publishing_components (59.1.0)
+    govuk_publishing_components (59.1.1)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
@@ -693,7 +693,7 @@ DEPENDENCIES
   debug
   gds-api-adapters (~> 99.2)
   gds-sso (~> 20.0)
-  govspeak (~> 10.4)
+  govspeak (~> 10.6)
   govuk_app_config (~> 9.17)
   graphql (~> 2.5)
   hashdiff (~> 1.2)

@@ -8,7 +8,7 @@ gem "bootsnap", require: false
 gem "content_block_tools", "~> 0.12"
 gem "gds-api-adapters", "~> 99.2"
 gem "gds-sso", "~> 20.0"
-gem "govspeak", "~> 10.4"
+gem "govspeak", "~> 10.6"
 gem "govuk_app_config", "~> 9.17"
 gem "hashdiff", "~> 1.2"
 gem "memo_wise", "~> 1.13"
