@@ -693,7 +693,7 @@ DEPENDENCIES
   debug
   gds-api-adapters (~> 99.2)
   gds-sso (~> 20.0)
-  govspeak (~> 10.4)
+  govspeak (~> 10.6)
   govuk_app_config (~> 9.17)
   graphql (~> 2.5)
   hashdiff (~> 1.2)
