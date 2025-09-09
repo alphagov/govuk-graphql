@@ -184,7 +184,7 @@ GEM
       base64
       fiber-storage
       logger
-    hashdiff (1.2.0)
+    hashdiff (1.2.1)
     hashie (5.0.0)
     htmlentities (4.3.4)
     http-accept (1.7.0)
