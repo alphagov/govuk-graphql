@@ -14,7 +14,7 @@ gem "hashdiff", "~> 1.2"
 gem "memo_wise", "~> 1.13"
 gem "pg", "~> 1.6"
 gem "sequel", "~> 5.99"
-gem "sequel_pg", "~> 1.17", require: "sequel"
+gem "sequel_pg", "~> 1.18", require: "sequel"
 gem "sequel-rails", "~> 1.2"
 
 gem "puma", ">= 5.0"
