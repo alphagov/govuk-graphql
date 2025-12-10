@@ -104,7 +104,6 @@ GEM
       logger
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
-    fiber-storage (1.0.1)
     gds-api-adapters (99.3.0)
       addressable
       link_header
@@ -180,9 +179,8 @@ GEM
       rouge
       sprockets (>= 3)
       sprockets-rails
-    graphql (2.5.14)
+    graphql (2.5.15)
       base64
-      fiber-storage
       logger
     hashdiff (1.2.1)
     hashie (5.0.0)
