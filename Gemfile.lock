@@ -105,7 +105,7 @@ GEM
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
     fiber-storage (1.0.1)
-    gds-api-adapters (99.3.0)
+    gds-api-adapters (102.0.0)
       addressable
       link_header
       null_logger
@@ -188,7 +188,7 @@ GEM
     hashie (5.0.0)
     htmlentities (4.3.4)
     http-accept (1.7.0)
-    http-cookie (1.0.8)
+    http-cookie (1.1.0)
       domain_name (~> 0.5)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
@@ -222,7 +222,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2025.0805)
+    mime-types-data (3.2026.0127)
     mini_mime (1.1.5)
     minitest (5.26.2)
     msgpack (1.8.0)
@@ -651,7 +651,7 @@ DEPENDENCIES
   content_block_tools (~> 0.17)
   csv
   debug
-  gds-api-adapters (~> 99.3)
+  gds-api-adapters (~> 102.0)
   gds-sso (~> 20.0)
   govspeak (~> 10.6)
   govuk_app_config (~> 9.22)
