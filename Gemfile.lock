@@ -582,7 +582,7 @@ GEM
     sentry-ruby (5.28.1)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    sequel (5.100.0)
+    sequel (5.101.0)
       bigdecimal
     sequel-rails (1.2.4)
       actionpack (>= 4.0.0)
@@ -664,7 +664,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 4.0)
   rails (~> 8.0.2)
   rubocop-govuk (~> 5.1)
-  sequel (~> 5.100)
+  sequel (~> 5.101)
   sequel-rails (~> 1.2)
   sequel_pg (~> 1.18)
   stackprof (~> 0.2.27)
