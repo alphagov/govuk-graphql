@@ -40,7 +40,7 @@ group :development, :test do
   gem "rubocop-govuk", "~> 5.1", require: false
 
   gem "rack-mini-profiler", "~> 4.0"
-  gem "stackprof", "~> 0.2.27"
+  gem "stackprof", "~> 0.2.28"
 
   # Needed by RubyMine
   gem "mutex_m", require: false
