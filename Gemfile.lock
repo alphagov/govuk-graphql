@@ -77,7 +77,7 @@ GEM
     ast (2.4.3)
     base64 (0.3.0)
     benchmark (0.5.0)
-    bigdecimal (4.0.1)
+    bigdecimal (4.1.0)
     bootsnap (1.23.0)
       msgpack (~> 1.2)
     brakeman (7.1.2)
@@ -582,7 +582,7 @@ GEM
     sentry-ruby (5.28.1)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    sequel (5.102.0)
+    sequel (5.103.0)
       bigdecimal
     sequel-rails (1.2.4)
       actionpack (>= 4.0.0)
@@ -664,7 +664,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 4.0)
   rails (~> 8.0.2)
   rubocop-govuk (~> 5.1)
-  sequel (~> 5.102)
+  sequel (~> 5.103)
   sequel-rails (~> 1.2)
   sequel_pg (~> 1.19)
   stackprof (~> 0.2.28)
