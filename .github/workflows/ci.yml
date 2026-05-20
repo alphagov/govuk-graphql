@@ -51,10 +51,10 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git pkg-config
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@97ecb7b512899eb71ab1bf2310a624c6f1589ac6 # v1.308.0
         with:
           ruby-version: .ruby-version
           bundler-cache: true
