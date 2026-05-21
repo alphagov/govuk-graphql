@@ -2,9 +2,7 @@
 
 ---
 
-**EXPERIMENTAL - DO NOT USE IN PRODUCTION**
-
-**Ask Richard Towers if you want more details about this repository**
+** This repo has been retired, as it was experimental and never used in production **
 
 ----
 
